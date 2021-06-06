@@ -27,6 +27,6 @@
     "access": "public"
   },
   "devDependencies": {
-    "@zhangli-cli-dev": "^1.0.1"
+    "@zhangli-cli-dev": "^1.0.2"
   }
 }
