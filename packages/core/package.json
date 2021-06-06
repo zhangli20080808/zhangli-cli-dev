@@ -23,6 +23,6 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "devDependencies": {
-    "@zhangli-cli-dev/utils": "^1.0.1"
+    "@zhangli-cli-dev/utils": "^1.0.0"
   }
 }
