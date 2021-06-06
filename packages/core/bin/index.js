@@ -1,3 +1,4 @@
 #! /usr/bin/env node
-
-console.log('zl cli')
+const utils = require('@zhangli-cli-dev/utils');
+utils()
+console.log('zl cli 123');
