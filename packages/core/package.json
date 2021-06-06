@@ -1,6 +1,6 @@
 {
   "name": "@zhangli-cli-dev/core",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "description": "@zhangli-cli-dev core",
   "keywords": [
     "zl-cli"
@@ -21,8 +21,5 @@
   ],
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
-  },
-  "devDependencies": {
-    "@zhangli-cli-dev/utils": "^1.0.1"
   }
 }
