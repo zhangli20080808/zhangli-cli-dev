@@ -1,10 +1,13 @@
 {
   "name": "@zhangli-cli-dev/core",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "description": "@zhangli-cli-dev core",
   "keywords": [
     "zl-cli"
   ],
+  "bin":{
+    "zhangli-cli-dev": "bin/index.js"
+  },
   "author": "zhangli20080808 <791492434@qq.com>",
   "homepage": "",
   "license": "ISC",
