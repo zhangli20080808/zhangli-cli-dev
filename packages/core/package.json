@@ -1,6 +1,6 @@
 {
   "name": "@zhangli-cli-dev/core",
-  "version": "1.0.3",
+  "version": "1.0.2",
   "description": "@zhangli-cli-dev core",
   "keywords": [
     "zl-cli"
@@ -21,5 +21,12 @@
   ],
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "gitHead": "714baec39735057c1d163813500fb97659360224",
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@zhangli-cli-dev": "^1.0.1"
   }
 }
