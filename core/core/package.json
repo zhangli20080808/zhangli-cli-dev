@@ -27,6 +27,6 @@
     "access": "public"
   },
   "dependencies": {
-    "@zhangli-cli-dev/utils": "file:../utils"
+    "@zhangli-cli-dev/utils": "file:../../utils/utils"
   }
 }

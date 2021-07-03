@@ -1,3 +1,5 @@
+## lerna核心操作
+[lerna官网简介](https://lerna.js.org/)
 ## 脚手架拆包策略 - 拆包结果
 ![](./images/脚手架架构设计图.png)
 * 核心流程：core
