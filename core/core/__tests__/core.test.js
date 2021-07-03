@@ -1,6 +1,6 @@
 'use strict';
 
-const core = require('../lib/core');
+const core = require('../lib');
 
 describe('core', () => {
     it('needs tests');

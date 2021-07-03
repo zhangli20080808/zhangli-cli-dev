@@ -2,7 +2,7 @@
 [lerna官网简介](https://lerna.js.org/)
 ## 脚手架拆包策略 - 拆包结果
 ![](./images/脚手架架构设计图.png)
-* 核心流程：core
+* 核心流程：index
 * 命令： commands
     1. 初始化
     2. 发布
@@ -21,11 +21,11 @@
     5. Git Api
 ## 拆分原则
 根据模块的功能拆分：
-1. 核心模块：core
+1. 核心模块：index
 2. 命令模块：commands
 3. 模型模块：models
 4. 工具模块：utils
-## core 模块技术方案
+## index 模块技术方案
 
 ![](./images/命令执行流程.png)
 ### 命令执行流程
