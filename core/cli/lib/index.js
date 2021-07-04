@@ -7,6 +7,8 @@ const constants = require('../constants')
 const semver = require('semver')
 const colors = require('colors')
 const rootCheck = require('root-check')
+const userHome = require('user-home')
+const pathExist = require('path-exists')
 
 /**
  * require 支持加载的类型资源 .js/.json/.node
@@ -20,6 +22,7 @@ function core () {
     checkPkgVersion()
     checkNodeVersion()
     checkRoot()
+    checkUseHome()
   } catch (e) {
     log.error(e.message)
   }
@@ -54,4 +57,14 @@ function checkPkgVersion () {
  */
 function checkRoot () {
   rootCheck()
+}
+
+/**
+ * 去判断环境，再拼装起来
+ * /Users/zhangli
+ */
+function checkUseHome () {
+  if(!userHome || !pathExist(userHome)){
+    throw new Error(colors.red('当前登录用户主目录不存在！'))
+  }
 }
