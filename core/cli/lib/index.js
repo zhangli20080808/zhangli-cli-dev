@@ -10,6 +10,8 @@ const rootCheck = require('root-check')
 const userHome = require('user-home')
 const pathExist = require('path-exists')
 
+let args
+
 /**
  * require 支持加载的类型资源 .js/.json/.node
  * .js -> module.exports/exports
@@ -23,6 +25,8 @@ function core () {
     checkNodeVersion()
     checkRoot()
     checkUseHome()
+    checkInputArgs()
+    log.verbose('debug', 'tests')
   } catch (e) {
     log.error(e.message)
   }
@@ -64,7 +68,24 @@ function checkRoot () {
  * /Users/zhangli
  */
 function checkUseHome () {
-  if(!userHome || !pathExist(userHome)){
+  if (!userHome || !pathExist(userHome)) {
     throw new Error(colors.red('当前登录用户主目录不存在！'))
   }
+}
+
+/**
+ * 在这边检查入参主要是为了 是否是要进入调试模式
+ * 比如要打印一些 debug 信息 --debug 继而在log模块设置 环境变量 LOG_LEVEL
+ */
+
+function checkInputArgs () {
+  const minimist = require('minimist')
+  args = minimist(process.argv.slice(2))
+  // console.log(args) // { _: [], debug: true, scope: true }
+  checkArgs()
+}
+
+function checkArgs () {
+  process.env.LOG_LEVEL = args.debug ? 'verbose' : 'info'
+  log.level = process.env.LOG_LEVEL
 }

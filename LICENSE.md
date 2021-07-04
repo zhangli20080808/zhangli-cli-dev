@@ -47,6 +47,7 @@
  * npmlog  - 打印日志
  * fs-extra - 基于fs封装的很多有价值的文件操作
    * path-exists
+ * minimist 检查入参     
  * semver - 版本比对，比如是否是最新版本
  * colors - 在终端中打印不同颜色的文本
  * user-home - 帮我们快速拿到用户的主目录
