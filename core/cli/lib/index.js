@@ -1,6 +1,6 @@
 'use strict'
-
-module.exports = core
+const path = require('path')
+const fs = require('fs')
 const pkg = require('../package.json')
 const log = require('@zhangli-cli-dev/log')
 const constants = require('../constants')
@@ -8,9 +8,10 @@ const semver = require('semver')
 const colors = require('colors')
 const rootCheck = require('root-check')
 const userHome = require('user-home')
-const pathExist = require('path-exists')
+const pathExist = require('path-exists').sync
 
-let args
+let args;
+module.exports = core
 
 /**
  * require 支持加载的类型资源 .js/.json/.node
@@ -26,7 +27,8 @@ function core () {
     checkRoot()
     checkUseHome()
     checkInputArgs()
-    log.verbose('debug', 'tests')
+    checkEnv()
+    // log.verbose('debug', 'tests')
   } catch (e) {
     log.error(e.message)
   }
@@ -88,4 +90,36 @@ function checkInputArgs () {
 function checkArgs () {
   process.env.LOG_LEVEL = args.debug ? 'verbose' : 'info'
   log.level = process.env.LOG_LEVEL
+}
+
+/**
+ * 检查环境变量
+ * 可以在操作系统中配置一些环境变量，将我们一些用户名，密码 敏感信息保存在我们用户的本地,而不用集成到代码当中
+ * 需要的时候就可以实时进行读取，同时也可以做很多默认的配置信息
+ * CLI_HOME=.zhangli-cli 缓存主目录
+ */
+function checkEnv () {
+  // const dotenv = require('dotenv')
+  // const dotenvPath = path.resolve(userHome,'.env')
+  // if(pathExist(dotenvPath)){
+  //   config = dotenv.config({
+  //     path: dotenvPath
+  //   })
+  // }
+  // log.verbose('环境变量',config,process.env.DB_USER) // { parsed: { CLI_HOME: '.zhangli-cli', DB_USER: 'root' } } root
+  // 用户没有配置 CLI_HOME
+  createDefaultConfig()
+  log.verbose('环境变量',process.env.CLI_HOME_PATH) // { parsed: { CLI_HOME: '.zhangli-cli', DB_USER: 'root' } } root
+}
+
+function createDefaultConfig () {
+  const cliConfig = {
+    home: userHome
+  }
+  if(process.env.CLI_HOME){
+    cliConfig['cliHome'] = path.join(userHome, process.env.CLI_HOME)
+  }else {
+    cliConfig['cliHome'] = path.join(userHome, constants.DEFAULT_CLI_HOME)
+  }
+  process.env.CLI_HOME_PATH = cliConfig.cliHome
 }
