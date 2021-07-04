@@ -1,11 +1,12 @@
 'use strict'
 
-module.exports = index
+module.exports = core
 const pkg = require('../package.json')
 const log = require('@zhangli-cli-dev/log')
 const constants = require('../constants')
 const semver = require('semver')
 const colors = require('colors')
+const rootCheck = require('root-check')
 
 /**
  * require 支持加载的类型资源 .js/.json/.node
@@ -14,10 +15,11 @@ const colors = require('colors')
  * any -> 会默认使用js引擎去解析，当成一个js文件 比如 require('a.txt')
  * .md是不行的，但是如果我们把内容改成一段js代码，就可以
  */
-function index () {
+function core () {
   try {
     checkPkgVersion()
     checkNodeVersion()
+    checkRoot()
   } catch (e) {
     log.error(e.message)
   }
@@ -39,7 +41,17 @@ function checkNodeVersion () {
 }
 
 function checkPkgVersion () {
-  log.notice('cli', pkg.version)
+  log.info('cli', pkg.version)
   // log.success('test','success...')
   // log.verbose('debug','debug...')
+}
+
+/**
+ * sudo 启动   process.getuid() -> 0  普通启动 -> 501
+ * 通过 root 降级
+ * sudo 启动后 任然是501
+ * 核心是调用了  geteuid setegid
+ */
+function checkRoot () {
+  rootCheck()
 }
