@@ -1,6 +1,5 @@
 'use strict'
 const path = require('path')
-const fs = require('fs')
 const pkg = require('../package.json')
 const log = require('@zhangli-cli-dev/log')
 const constants = require('../constants')
@@ -10,7 +9,7 @@ const rootCheck = require('root-check')
 const userHome = require('user-home')
 const pathExist = require('path-exists').sync
 
-let args;
+let args
 module.exports = core
 
 /**
@@ -28,6 +27,7 @@ function core () {
     checkUseHome()
     checkInputArgs()
     checkEnv()
+    checkGlobalUpdate()
     // log.verbose('debug', 'tests')
   } catch (e) {
     log.error(e.message)
@@ -109,17 +109,37 @@ function checkEnv () {
   // log.verbose('环境变量',config,process.env.DB_USER) // { parsed: { CLI_HOME: '.zhangli-cli', DB_USER: 'root' } } root
   // 用户没有配置 CLI_HOME
   createDefaultConfig()
-  log.verbose('环境变量',process.env.CLI_HOME_PATH) // { parsed: { CLI_HOME: '.zhangli-cli', DB_USER: 'root' } } root
+  log.verbose('环境变量', process.env.CLI_HOME_PATH) // { parsed: { CLI_HOME: '.zhangli-cli', DB_USER: 'root' } } root
 }
 
 function createDefaultConfig () {
   const cliConfig = {
     home: userHome
   }
-  if(process.env.CLI_HOME){
+  if (process.env.CLI_HOME) {
     cliConfig['cliHome'] = path.join(userHome, process.env.CLI_HOME)
-  }else {
+  } else {
     cliConfig['cliHome'] = path.join(userHome, constants.DEFAULT_CLI_HOME)
   }
   process.env.CLI_HOME_PATH = cliConfig.cliHome
+}
+
+/**
+ * 是否需要全局更新
+ * 1. 获取当前的版本号和模块包名
+ * 2. 调用 npm API 获取所有版本号 https://registry.npmjs.org/@zhangli-cli-dev/core
+ * 3. 获取所有版本号，比对哪些版本是大于当前版本的
+ * 4. 获取最新版本号，提示用户更新到最新版本
+ */
+async function checkGlobalUpdate () {
+  const currentVersion = pkg.version
+  const npmName = pkg.name
+  const { getNpmSemverVersion } = require('@zhangli-cli-dev/get-npm-info')
+  const lastVersion = await getNpmSemverVersion(currentVersion, npmName)
+  if (lastVersion && semver.gt(lastVersion, currentVersion)) {
+    // TODO
+    log.warn(colors.yellow(`请手动更新${npmName},当前版本${currentVersion},最新版本${lastVersion}
+     更新命令 npm install -g ${npmName}`
+    ))
+  }
 }
