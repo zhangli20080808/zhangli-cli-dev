@@ -2,6 +2,6 @@
 
 const core = require('../lib');
 
-describe('core', () => {
+describe('cli', () => {
     it('needs tests');
 });
