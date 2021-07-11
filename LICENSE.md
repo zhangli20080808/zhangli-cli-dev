@@ -55,3 +55,5 @@
  * root-check - root账户的一个检查，自动降级
  * url-join 
 
+## 命令的注册
+
