@@ -76,7 +76,7 @@
 
 这样的架构设计已经可以满足一般脚手架需求，但是有以下两个问题：
 
-- cli 安装速度慢：所有 package 都集成在 cli 里，因此当命令较多时，会减慢 cli 的安装速度
+- cli 安装速度慢：所有 index 都集成在 cli 里，因此当命令较多时，会减慢 cli 的安装速度
 - 灵活性差：init 命令只能使用 @imooc-cli-dev/init 包，对于集团公司而言，每个 bu 的 init 命令可能都各不相同，可能需要实现 init 命令动态化，如：
 
 1. 团队 A 使用 @imooc-cli-dev/init 作为初始化模块
@@ -88,7 +88,7 @@
 
  1. 在本地开发的时候，我们希望能指向本地的init代码文件，而不是缓存文件，需要标识当前init入口文件的绝对路径，给到绝对路径后，通过require来加载 require('xxxx/aaa/index.js')
     
- 2. 如果本地没有，需要通过 动态的 去下载代码，且加载进去，拿到缓存目录，初始化 package对象(对应一个npm module 比如我们执行的是 zhangli-cli-dev init 这个package就对应 init的包名 有了package对象我们就可以进行判断，比如package就可以提供一个是否存在模块的功能，如果缓存目录里面已经存在了 package 模块 ，有尝试更新，没有，下载安装最新版本)
+ 2. 如果本地没有，需要通过 动态的 去下载代码，且加载进去，拿到缓存目录，初始化 package对象(对应一个npm module 比如我们执行的是 zhangli-cli-dev init 这个package就对应 init的包名 有了package对象我们就可以进行判断，比如package就可以提供一个是否存在模块的功能，如果缓存目录里面已经存在了 index 模块 ，有尝试更新，没有，下载安装最新版本)
  3. 安装完成之后，require加载，获取本地代码入口文件 找到本地代码模块对应的一个地址，寻找 有没有入口文件，没有 直接 报错。如果有 动态生成执行代码的命令
 
  比如 普通执行 node core/cli/bin/index.js 还有一种方式,通过字符串的方式进行执行 <code>node -e require('core/cli/bin/index.js')</code>
@@ -102,3 +102,5 @@
 * CLI_HOME
 * LOG_LEVEL
 * CLI_TARGET_PATH
+
+##
