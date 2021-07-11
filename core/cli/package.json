@@ -27,6 +27,7 @@
     "access": "public"
   },
   "dependencies": {
+    "@zhangli-cli-dev/exec": "file:../exec",
     "@zhangli-cli-dev/get-npm-info": "file:../../utils/get-npm-info",
     "@zhangli-cli-dev/init": "file:../../commands/init",
     "@zhangli-cli-dev/log": "file:../../utils/log",

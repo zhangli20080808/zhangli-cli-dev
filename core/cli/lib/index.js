@@ -10,6 +10,7 @@ const userHome = require('user-home')
 const pathExist = require('path-exists').sync
 const commander = require('commander')
 const init = require('@zhangli-cli-dev/init')
+const exec = require('@zhangli-cli-dev/exec')
 
 const program = new commander.Command()
 
@@ -18,6 +19,7 @@ module.exports = core
 /**
  * require 支持加载的类型资源 .js/.json/.node
  * .js -> module.exports/exports
+ *
  * .json -> JSON.parse
  * any -> 会默认使用js引擎去解析，当成一个js文件 比如 require('a.txt')
  * .md是不行的，但是如果我们把内容改成一段js代码，就可以
@@ -152,7 +154,7 @@ function registerCommand () {
     .command('init [programName]')  // 单独封装成一个 package
     // 如果当前文件夹下面是有文件的时候 默认情况我们是不能初始化的 如果要强制 那先清空掉 通过action方法去执行
     .option('-f,--force', '是否强制初始化项目')
-    .action(init)
+    .action(exec)
 
   // 高级用法 通过监听debug命令 处理 环境变量 属性监听的优点在于 他可以在我们执行业务逻辑之前去执行
   // 开启了这个过程，后续要将启动过程和lerna一样 全部移植到命令的执行过程中 也就是在注册后执行命令的时候，去执行这个流程

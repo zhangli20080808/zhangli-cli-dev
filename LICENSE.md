@@ -97,3 +97,8 @@
 
  优点：完全不依赖当前脚手架去执行命令，可以通过命令的一个地址把他执行起来
  
+## 环境变量总结
+* CLI_HOME_PATH
+* CLI_HOME
+* LOG_LEVEL
+* CLI_TARGET_PATH
