@@ -1,8 +1,11 @@
-'use strict';
+'use strict'
 
-module.exports = utils;
+const toString = Object.prototype.toString  // 不能校验自定义类型
 
-function utils() {
-  // TODO
-  console.log('utils');
+function isPlainObject (val) {
+  return toString.call(val) === '[object Object]'
+}
+
+module.exports = {
+  isPlainObject
 }
