@@ -31,6 +31,9 @@ async function core () {
     // log.verbose('debug', 'tests')
   } catch (e) {
     log.error(e.message)
+    if (program.debug) {
+      console.error(e)
+    }
   }
 }
 
