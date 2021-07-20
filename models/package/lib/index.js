@@ -120,14 +120,22 @@ class Package {
    * 是否存在可以返回出去由外部判断
    */
   getRootFile () {
-    const dir = pkgDir(this.targetPath)
-    if (dir) {
-      const pkgFile = require(path.resolve(dir, 'package.json'))
-      if (pkgFile && pkgFile.main) {
-        return formatPath(path.resolve(dir, pkgFile.main))
+    function _getRootFile(targetPath){
+      const dir = pkgDir(targetPath)
+      if (dir) {
+        const pkgFile = require(path.resolve(dir, 'package.json'))
+        if (pkgFile && pkgFile.main) {
+          return formatPath(path.resolve(dir, pkgFile.main))
+        }
       }
+      return null
     }
-    return null
+    if(this.storeDir){
+      return _getRootFile(this.cacheFilePath)
+    }else {
+      return _getRootFile(this.targetPath)
+    }
+
   }
 }
 

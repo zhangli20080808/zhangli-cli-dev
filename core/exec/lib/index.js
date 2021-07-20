@@ -14,6 +14,7 @@
  * 4. Package.update/Package.install
  // zhangli-cli-dev init -tp /Users/zhangli/learning_code/zhangli-cli-dev/commands/init -d
  // zhangli-cli-dev init xxx -d -f
+ // zhangli-cli-dev init program -tp /Users/zhangli/learning_code/zhangli-cli-dev/commands/init -d -f
  */
 const path = require('path')
 const Package = require('@zhangli-cli-dev/package')
@@ -39,7 +40,7 @@ async function exec () {
   // command name 也可以通过接口去获取 这里我们做映射表
   const cmdName = cmdObj.name()
   const packageName = SETTINGS[cmdName]
-  const packageVersion = '1.1.0'
+  const packageVersion = 'latest'
   if (!targetPath) {
     //  zhangli-cli-dev init psor -d -f
     targetPath = path.resolve(homePath, CACHE_DIR)  // 生成缓存路径 .zhangli-cli-dev/dependencies
