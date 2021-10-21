@@ -61,14 +61,14 @@
 
 - npmlog - 打印日志
 - fs-extra - 基于 fs 封装的很多有价值的文件操作
-- path-exists
-- minimist 检查入参
+- path-exists - 判断路径是否存在
+- minimist  - 检查入参
 - semver - 版本比对，比如是否是最新版本
 - colors - 在终端中打印不同颜色的文本
 - user-home - 帮我们快速拿到用户的主目录
 - dotenv - 获取环境变量
 - root-check - root 账户的一个检查，自动降级
-- url-join
+- url-join - url的拼接，不需要考虑中间是否需要添加/,会自己拼接
 
 ## 命令的注册
 
@@ -98,7 +98,7 @@
  优点：完全不依赖当前脚手架去执行命令，可以通过命令的一个地址把他执行起来
  
 ## 环境变量总结
-* CLI_HOME_PATH
+* CLI_HOME_PATH - 缓存路径
 * CLI_HOME
 * LOG_LEVEL
 * CLI_TARGET_PATH
