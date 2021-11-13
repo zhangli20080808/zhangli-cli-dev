@@ -6,6 +6,11 @@ function isPlainObject (val) {
   return toString.call(val) === '[object Object]'
 }
 
+function isType (val) {
+  return toString.call(val).slice(8,-1).toLowerCase()
+}
+
+
 module.exports = {
   isPlainObject
 }

@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 /**
  * 1. 判断当前package是否存在
@@ -6,53 +6,73 @@
  * 3. 更新 package
  * 4. 拿到入口文件的路径
  */
-const path = require('path')
-const pkgDir = require('pkg-dir').sync
-const npminstall = require('npminstall')
-const pathExist = require('path-exists').sync
-const fse = require('fs-extra')
-const { isPlainObject } = require('@zhangli-cli-dev/utils')
-const { getDefaultRegistry, getNpmLatestVersion } = require('@zhangli-cli-dev/get-npm-info')
-const formatPath = require('@zhangli-cli-dev/format-path')
+const path = require('path');
+const pkgDir = require('pkg-dir').sync;
+const npminstall = require('npminstall');
+const pathExist = require('path-exists').sync;
+const fse = require('fs-extra');
+const { isPlainObject } = require('@zhangli-cli-dev/utils');
+const {
+  getDefaultRegistry,
+  getNpmLatestVersion,
+} = require('@zhangli-cli-dev/get-npm-info');
+const formatPath = require('@zhangli-cli-dev/format-path');
 
+/**
+ * 通过 Package 去实例化 Package对象 
+ * 1. package是否存在 exists
+ * 2. package 安装 install
+ * 3. 更新 update
+ * 4. 获取入口文件的路径 getRootFile
+ */
 class Package {
-  constructor (options) {
+  constructor(options) {
     if (!options) {
-      throw new Error('Package 类的参数类型不能为空')
+      throw new Error('Package 类的参数类型不能为空');
     }
     if (!isPlainObject(options)) {
-      throw new Error('Package 类的参数类型必须为object')
+      throw new Error('Package 类的参数类型必须为object');
     }
-    //  package 的目标路径
-    this.targetPath = options.targetPath
+    // package 的目标路径
+    this.targetPath = options.targetPath;
     // 缓存package的路径
-    this.storeDir = options.storeDir
+    this.storeDir = options.storeDir;
     // package 的包名
-    this.packageName = options.packageName
+    this.packageName = options.packageName;
     // package 的版本
-    this.packageVersion = options.packageVersion
+    this.packageVersion = options.packageVersion;
     // 缓存目录前缀
-    this.cacheFilePathPrefix = this.packageName.replace('/', '_')
+    this.cacheFilePathPrefix = this.packageName.replace('/', '_');
   }
 
-  async prepare () {
+  /**
+   * 将 packageVersion，latest转换成具体的版本，因为具体查的时候，还是要看版本号的
+   */
+  async prepare() {
+    // 字符串存在，路径也要存在
     if (this.storeDir && !pathExist(this.storeDir)) {
       // 一次性创建完所有目录
-      fse.mkdirpSync(this.storeDir)
+      fse.mkdirpSync(this.storeDir);
     }
     if (this.packageVersion === 'latest') {
-      this.packageVersion = await getNpmLatestVersion(this.packageName)
+      this.packageVersion = await getNpmLatestVersion(this.packageName);
     }
     // console.log(this.packageVersion)
   }
 
-  get cacheFilePath () {
-    return path.resolve(this.storeDir, `_${this.cacheFilePathPrefix}@${this.packageVersion}@${this.packageName}`)
+  get cacheFilePath() {
+    return path.resolve(
+      this.storeDir,
+      `_${this.cacheFilePathPrefix}@${this.packageVersion}@${this.packageName}`
+    );
   }
 
   //最新版本路径
-  getSpecificCacheFilePath (lastPackageVersion) {
-    return path.resolve(this.storeDir, `_${this.cacheFilePathPrefix}@${lastPackageVersion}@${this.packageName}`)
+  async getSpecificCacheFilePath(lastPackageVersion) {
+    return path.resolve(
+      this.storeDir,
+      `_${this.cacheFilePathPrefix}@${lastPackageVersion}@${this.packageName}`
+    );
   }
 
   /**
@@ -60,84 +80,85 @@ class Package {
    * 1. 判断是缓存模式还是指定了 targetPath
    * _@imooc-cli_init@1.1.2@@imooc-cli  实际的包名 @imooc-cli/init 1.1.2
    * 2. 生成缓存的文件路径
+   * 3. 拼出这样的一个路径去判断 这个路径是否存在
    */
-  async exists () {
+  async exists() {
     if (this.storeDir) {
-      await this.prepare()
+      await this.prepare();
       // /Users/zhangli/.zhangli-cli-dev/dependencies/node_modules/_@imooc-cli_init@1.1.2@@imooc-cli/init
-      console.log(this.cacheFilePath)
-      return pathExist(this.cacheFilePath)
+      console.log(this.cacheFilePath,'exist');
+      return pathExist(this.cacheFilePath);
     } else {
-      return pathExist(this.targetPath)
+      return pathExist(this.targetPath);
     }
   }
 
   /**
-   *  安装 package - 通过 npminstall
+   *  安装 package 依赖 - 通过 npminstall
    * https://www.npmjs.com/package/npminstall
+   * https://class.imooc.com/course/qadetail/283328
    */
-  async install () {
-    await this.prepare()
+  async install() {
+    await this.prepare();
     return npminstall({
       root: this.targetPath,
-      pkgs: [
-        { name: this.packageName, version: this.packageVersion },
-      ],
+      pkgs: [{ name: this.packageName, version: this.packageVersion }],
       registry: getDefaultRegistry(),
       storeDir: this.storeDir,
-    })
+    });
   }
 
-//  更新 package
-  async update () {
-    await this.prepare()
+  //  更新 package，最新版本存在，就不安装了
+  async update() {
+    await this.prepare();
     //  1.获取最新的npm版本号
-    const latestPackageVersion = await getNpmLatestVersion(this.packageName)
+    const latestPackageVersion = await getNpmLatestVersion(this.packageName);
     //  2.查询最新版本对应的路径是否存在
-    const latestFilePath = await this.getSpecificCacheFilePath(latestPackageVersion)
-    console.log(latestFilePath,'latestFilePath')
+    const latestFilePath = await this.getSpecificCacheFilePath(
+      latestPackageVersion
+    );
+    // console.log(latestFilePath, 'latestFilePath-update');
     //  3.如果不存在，则直接安装最新版本
     if (!pathExist(latestFilePath)) {
       await npminstall({
         root: this.targetPath,
-        pkgs: [
-          { name: this.packageName, version: latestPackageVersion },
-        ],
+        pkgs: [{ name: this.packageName, version: latestPackageVersion }],
         registry: getDefaultRegistry(),
         storeDir: this.storeDir,
-      })
-      this.packageVersion = latestPackageVersion
+      });
+      // 注意 安装结束之后更新版本号
+      this.packageVersion = latestPackageVersion;
     }
   }
 
-//  获取入口文件绝对路径 lib/index.js
+  //  获取入口文件绝对路径 lib/index.js
   /**
    * 1. 获取package.json所在的主目录 - 用户传入的 targetPath 有可能是没有 package.json的 不是模块的主目录
-   *    比如 我们从lib进入 也应该兼容掉 应该找到package.json所在的目录- 也就是模块的根路径 - pkg-dir
+   *    比如 我们从lib目录进入，也应该兼容掉 应该找到package.json所在的目录 - 也就是模块的根路径 - pkg-dir
    * 2. 读取 package.json 直接require 就行
    * 3. 找到 package.json main或者lib 找到 输出成一个路径，对路径做兼容
    * 4. 路径兼容 mac和window路径差异
    * 是否存在可以返回出去由外部判断
    */
-  getRootFile () {
-    function _getRootFile(targetPath){
-      const dir = pkgDir(targetPath)
+  getRootFile() {
+    function _getRootFile(targetPath) {
+      const dir = pkgDir(targetPath);
+      // /Users/zhangli/learning_code/zhangli-cli-dev/commands/init dir
       if (dir) {
-        const pkgFile = require(path.resolve(dir, 'package.json'))
+        const pkgFile = require(path.resolve(dir, 'package.json'));
         if (pkgFile && pkgFile.main) {
-          return formatPath(path.resolve(dir, pkgFile.main))
+          return formatPath(path.resolve(dir, pkgFile.main));
         }
       }
-      return null
+      return null;
     }
-    if(this.storeDir){
-      return _getRootFile(this.cacheFilePath)
-    }else {
+    if (this.storeDir) {
+      return _getRootFile(this.cacheFilePath);
+    } else {
       // 缓存不存在时
-      return _getRootFile(this.targetPath)
+      return _getRootFile(this.targetPath);
     }
-
   }
 }
 
-module.exports = Package
+module.exports = Package;
