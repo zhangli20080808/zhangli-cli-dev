@@ -7,7 +7,7 @@ const rootCheck = require('root-check');
 const userHome = require('user-home');
 const pathExist = require('path-exists').sync;
 const commander = require('commander');
-const init = require('@zhangli-cli-dev/init');
+// const init = require('@zhangli-cli-dev/init');
 const exec = require('@zhangli-cli-dev/exec');
 
 const constants = require('../constants');
@@ -43,30 +43,10 @@ async function core() {
 
 async function prepare() {
   checkPkgVersion();
-  checkNodeVersion();
   checkRoot();
   checkUseHome();
   checkEnv();
   await checkGlobalUpdate();
-}
-
-/**
- * 检查node版本
- * 一些api在低版本是不支持的，设置最低node版本号
- * 1. 获取当前node版本号
- * 2. 对比最低版本号 -> 版本号比对semver
- * eq相等 ne、neq不相等， gt大于， lt小于
- * gte、ge大于等于 lte、le 小于等于 not非 mod求模 等
- */
-
-function checkNodeVersion() {
-  const currentVersion = process.version;
-  const lowestVersion = constants.LOWEST_NODE_VERSION;
-  if (!semver.gte(currentVersion, lowestVersion)) {
-    throw new Error(
-      colors.red(`zhangli-cli-dev 需要安装 v${lowestVersion} 以上版本的Nodejs`)
-    );
-  }
 }
 
 function checkPkgVersion() {

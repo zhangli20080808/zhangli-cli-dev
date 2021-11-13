@@ -93,7 +93,11 @@ async function exec() {
   // TODO 后续改为node子进程的形式 在当前进程中无法充分利用cpu资源
   // 在子进程中进行调用，额外获得更多资源，获得更高的执行性能
   if (rootFile) {
-    require(rootFile).apply(null, arguments);
+    try {
+      require(rootFile)(Array.from(arguments));
+    } catch (err) {
+      log.error(err.message);
+    }
   }
 }
 
