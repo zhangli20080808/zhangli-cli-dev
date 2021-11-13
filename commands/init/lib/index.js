@@ -1,5 +1,10 @@
 'use strict'
 
+/**
+ * 考虑到灵活性，每个init命令都不相同，可能需要实现init命令动态化，根据远程返回的一个结果动态的去拿
+ * @param {*} programName 
+ * @param {*} cmdObj 
+ */
 function init (programName, cmdObj) {
   // zhangli-cli-dev init xxx -f
   // zhangli-cli-dev init pro -tp /xxx

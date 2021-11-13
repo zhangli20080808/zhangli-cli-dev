@@ -130,7 +130,7 @@ function checkEnv() {
   // log.verbose('环境变量',config,process.env.DB_USER) // { parsed: { CLI_HOME: '.zhangli-cli', DB_USER: 'root' } } root
   // 用户没有配置 CLI_HOME
   createDefaultConfig();
-  log.verbose('环境变量', process.env.CLI_HOME_PATH); // { parsed: { CLI_HOME: '.zhangli-cli', DB_USER: 'root' } } root
+  // log.verbose('环境变量', process.env.CLI_HOME_PATH); // { parsed: { CLI_HOME: '.zhangli-cli', DB_USER: 'root' } } root
 }
 
 function createDefaultConfig() {
@@ -179,7 +179,8 @@ function registerCommand() {
     // log.verbose('test')
   });
 
-  // 指定全局的 targetPath
+  // 指定全局的 targetPath, 这里属性监听有一个比较好的地方就是，他可以在我们执行业务逻辑之前去执行
+  // 通过环境变量去做业务逻辑的解耦，可以这样搞
   program.on('option:targetPath', function () {
     if (program.targetPath) {
       process.env.CLI_TARGET_PATH = program.targetPath;

@@ -133,6 +133,7 @@ class Package {
     if(this.storeDir){
       return _getRootFile(this.cacheFilePath)
     }else {
+      // 缓存不存在时
       return _getRootFile(this.targetPath)
     }
 
