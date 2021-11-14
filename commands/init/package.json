@@ -28,6 +28,8 @@
   },
   "dependencies": {
     "@zhangli-cli-dev/command": "file:../../models/command",
-    "@zhangli-cli-dev/log": "file:../../utils/log"
+    "@zhangli-cli-dev/log": "file:../../utils/log",
+    "fs-extra": "^9.1.0",
+    "inquirer": "^8.2.0"
   }
 }

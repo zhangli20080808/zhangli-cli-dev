@@ -22,9 +22,9 @@ class Command {
       let chain = Promise.resolve();
       chain = chain.then(() => this.checkNodeVersion());
       chain = chain.then(() => this.initArgs());
+      chain = chain.then(() => this.init());
       chain = chain
-        .then(() => this.init())
-        // chain = chain.then(() => this.())
+        .then(() => this.exec())
         .catch((err) => {
           log.error(err.message);
         });
@@ -38,7 +38,9 @@ class Command {
   init() {
     throw new Error('init 必须实现');
   }
-  exec() {}
+  exec() {
+    throw new Error('exec 必须实现');
+  }
   /**
    * 检查node版本
    * 一些api在低版本是不支持的，设置最低node版本号
