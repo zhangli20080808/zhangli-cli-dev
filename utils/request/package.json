@@ -1,7 +1,10 @@
 {
-  "name": "@zhangli-cli-dev/init",
+  "name": "@zhangli-cli-dev/request",
   "version": "1.0.0",
-  "description": "init",
+  "description": "request",
+  "keywords": [
+    "axios"
+  ],
   "author": "zhangli20080808 <791492434@qq.com>",
   "homepage": "https://github.com/zhangli20080808/zhangli-cli-dev#readme",
   "license": "ISC",
@@ -27,11 +30,6 @@
     "url": "https://github.com/zhangli20080808/zhangli-cli-dev/issues"
   },
   "dependencies": {
-    "@zhangli-cli-dev/command": "file:../../models/command",
-    "@zhangli-cli-dev/log": "file:../../utils/log",
-    "@zhangli-cli-dev/request": "file:../../utils/request",
-    "fs-extra": "^9.1.0",
-    "inquirer": "^8.2.0",
-    "semver": "^7.3.5"
+    "axios": "^0.24.0"
   }
 }

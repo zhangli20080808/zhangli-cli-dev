@@ -139,6 +139,11 @@
 - 检查 node 版本调整
 - 参数初始化
 - 利用node多进程执行动态命令
+## 获取项目基本信息
+## 模板相关
+```js
+mongod --dbpath=/Users/zhangli/data/db
+```
 
 ## 创建功能架构设计
 
@@ -160,7 +165,9 @@
 - 确认项目的基本信息
 
 2. 下载模板
-   下载模板是利用已经封装 Package 类快速实现相关功能
+   * 下载模板是利用已经封装 Package 类快速实现相关功能
+   * npm init egg -> npm init egg 相当于执行 npx create-egg，npx create-egg命令会下载create-egg库，再执行里面的bin(package.json里的bin字段)。npx create-egg 会在当前目录/node_modules目录下查找有没有create-egg，没有就会下载到临时目录，最后删除
+   * https://www.cnblogs.com/cool-fire/p/11007329.html
 
 3. 安装模板
 

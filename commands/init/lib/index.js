@@ -11,6 +11,7 @@ const fs = require('fs');
 const fse = require('fs-extra');
 const semver = require('semver');
 const inquirer = require('inquirer');
+const getProjectTemplate = require('./requestTemplate');
 
 const TYPE_PROJECT = 'project';
 const TYPE_COMPONENT = 'component';
@@ -28,15 +29,29 @@ class InitCommand extends Command {
    */
   async exec() {
     try {
-      const ret = await this.prepare();
-      // console.log(ret, 'rt');
-      if (ret) {
+      const projectInfo = await this.prepare();
+      if (projectInfo) {
         // 拿到基本信息后，进行后续模板的下载安装
+        log.verbose(projectInfo, 'projectInfo');
+        this.projectInfo = projectInfo
+        this.downTemplate();
       }
     } catch (e) {
       log.verbose(e.message);
     }
   }
+
+  /**
+   * 1. 通过项目模板Api获取项目模板信息
+   * 1.1 通过egg.js搭建一套后端系统
+   * 1.2 通过 npm 存储项目模板
+   * 1.3 将项目模板信息存储到mongodb数据库中
+   * 1.4 通过egg.js获取mongodb中的数据并且返回
+   */
+  downTemplate() {
+    console.log(this.projectInfo,this.template)
+  }
+
   /**
    * 1. 判断当前目录是否为空 -> 读取当前目录下的所有文件，通过 readdirSync 读取,判断是否为空
    * 2. 是否启动强制更新
@@ -47,6 +62,13 @@ class InitCommand extends Command {
    * process.cwd() 当前工作目录下,是可以改变的 或者使用 require('.')
    */
   async prepare() {
+    // 0 项目模板是否存在
+    const template = await getProjectTemplate();
+    console.log(template, 'template');
+    if (!template || template.length === 0) {
+      throw new Error('项目模板不存在');
+    }
+    this.template = template
     const localPath = process.cwd();
     const ret = this.isDirEmpty(localPath);
     if (!ret) {
@@ -106,7 +128,7 @@ class InitCommand extends Command {
     });
     log.verbose(type, 'type');
     if (type === TYPE_PROJECT) {
-      let o = await inquirer.prompt([
+      let project = await inquirer.prompt([
         {
           type: 'input',
           name: 'projectName',
@@ -159,10 +181,13 @@ class InitCommand extends Command {
           },
         },
       ]);
-      console.log(o);
+      projectInfo = {
+        type,
+        ...project,
+      };
     } else if (type === TYPE_COMPONENT) {
     }
-    // return projectInfo;
+    return projectInfo;
   }
 
   /**
