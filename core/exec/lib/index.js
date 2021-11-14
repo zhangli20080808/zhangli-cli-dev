@@ -17,8 +17,12 @@
  // zhangli-cli-dev init -tp /Users/zhangli/learning_code/zhangli-cli-dev/commands/init -d
  // zhangli-cli-dev init xxx -d -f
  // zhangli-cli-dev init program -tp /Users/zhangli/learning_code/zhangli-cli-dev/commands/init -d -f
+
+ 对于开启多进程的场景
+ 当需要下载大文件时，可以同时启动多个进程进行下载，下载完毕后进行文件合并，这个场景比较典型
  */
 const path = require('path');
+const cp = require('child_process');
 const Package = require('@zhangli-cli-dev/package');
 const log = require('@zhangli-cli-dev/log');
 
@@ -92,13 +96,55 @@ async function exec() {
   // console.log(rootFile,'rootFile')
   // TODO 后续改为node子进程的形式 在当前进程中无法充分利用cpu资源
   // 在子进程中进行调用，额外获得更多资源，获得更高的执行性能
+  // 1. fork 并不提供回调，通过子进程通信来解决，不推荐
+  // 2. spawn 可以不断收到结果，接受数据
   if (rootFile) {
     try {
-      require(rootFile)(Array.from(arguments));
+      // require(rootFile)(Array.from(arguments));
+      const argv = Array.from(arguments);
+      const cmd = argv[argv.length - 1];
+      const o = Object.create(null);
+      Object.keys(cmd).forEach((key) => {
+        if (
+          cmd.hasOwnProperty(key) &&
+          !key.startsWith('_') &&
+          key !== 'parent'
+        ) {
+          o[key] = cmd[key];
+        }
+      });
+      argv[argv.length - 1] = o;
+      const code = `require('${rootFile}').call(null,${JSON.stringify(argv)});`;
+      // window中 cp.spawn('cmd',['/c','node','-e',code]) cmd 是用来执行的主参数或者执行文件，-c是静默执行
+      const child = spawn('node', ['-e', code], {
+        cwd: process.cwd(),
+        // 默认是管道，意味着我们创建一个子进程之后，父子进程之间会建立起一个通道，需要使用 on 的方式进行监听
+        // stdio:'pipe',
+        stdio: 'inherit',
+        // 将相应的stdio传给父进程，会把输入，输入，错误值直接和父进程进行绑定，无须监听结果,将所有的输出流
+        // 都输入到当前的父进程当中
+      });
+      // child.stdout.on('data', (chunk) => {});
+      // child.stderr.on('data', (chunk) => {});
+      child.on('error', (e) => {
+        log.verbose(e.message);
+        process.exit(1);
+      });
+      child.on('exit', (e) => {
+        log.verbose('命令执行成功', e);
+        process.exit(e);
+      });
     } catch (err) {
       log.error(err.message);
     }
   }
+}
+
+function spawn(command, args, options) {
+  const win32 = process.platform === 'win32';
+  const cmd = win32 ? 'cmd' : command;
+  const cmdArgs = win32 ? ['/c'].concat(command, args) : args;
+  return cp.spawn(cmd, cmdArgs, options || {});
 }
 
 module.exports = exec;

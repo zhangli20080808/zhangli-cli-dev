@@ -6,7 +6,7 @@ const log = require('@zhangli-cli-dev/log');
 const { isPlainObject } = require('@zhangli-cli-dev/utils');
 class Command {
   constructor(argv) {
-    // console.log('cons123', argv);
+    // log.verbose('cons123', argv);
     if (!argv) {
       throw new Error('参数不能为空');
     }
