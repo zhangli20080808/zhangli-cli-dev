@@ -9,6 +9,7 @@ const Command = require('@zhangli-cli-dev/command');
 const log = require('@zhangli-cli-dev/log');
 const fs = require('fs');
 const fse = require('fs-extra');
+const semver = require('semver');
 const inquirer = require('inquirer');
 
 const TYPE_PROJECT = 'project';
@@ -111,8 +112,24 @@ class InitCommand extends Command {
           name: 'projectName',
           message: '请输入项目名称',
           default: '',
+          // 1. 首字符必须为英文字符
+          // 2. 尾字符必须为英文或者数字，不能为字符
+          // 3. 字符只能允许 '-_'
+          // 注意 \w 代表 a-zA-Z0-9_  * 可有可无
+          // 合法：
           validate: function (v) {
-            return typeof v === 'string';
+            const done = this.async();
+            let reg =
+              /^[a-zA-Z]+([-][a-zA-Z][a-zA-Z0-9]*|[_][a-zA-Z][a-zA-Z0-9]*|[a-zA-Z0-9])*$/.test(
+                v
+              );
+            setTimeout(() => {
+              if (!reg) {
+                done('请输入合法的项目名...');
+                return;
+              }
+              done(null, true);
+            }, 0);
           },
           filter: function (v) {
             return v;
@@ -124,10 +141,21 @@ class InitCommand extends Command {
           message: '请输入项目版本号',
           default: '',
           validate: function (v) {
-            return typeof v === 'string';
+            const done = this.async();
+            setTimeout(() => {
+              if (!!!semver.valid(v)) {
+                done('请输入合法的版本号...');
+                return;
+              }
+              done(null, true);
+            }, 0);
           },
           filter: function (v) {
-            return v;
+            if (!!semver.valid(v)) {
+              return semver.valid(v);
+            } else {
+              return v;
+            }
           },
         },
       ]);
