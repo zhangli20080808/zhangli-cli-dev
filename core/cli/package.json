@@ -1,6 +1,6 @@
 {
   "name": "@zhangli-cli-dev/core",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "@zhangli-cli-dev core",
   "keywords": [
     "zl-cli"
@@ -27,11 +27,11 @@
     "access": "public"
   },
   "dependencies": {
-    "@zhangli-cli-dev/exec": "^1.0.8",
-    "@zhangli-cli-dev/get-npm-infos": "^1.0.8",
-    "@zhangli-cli-dev/init": "^1.0.8",
-    "@zhangli-cli-dev/log": "^1.0.8",
-    "@zhangli-cli-dev/utils": "^1.0.8",
+    "@zhangli-cli-dev/exec": "^1.0.9",
+    "@zhangli-cli-dev/get-npm-infos": "^1.0.9",
+    "@zhangli-cli-dev/init": "^1.0.9",
+    "@zhangli-cli-dev/log": "^1.0.9",
+    "@zhangli-cli-dev/utils": "^1.0.9",
     "colors": "^1.4.0",
     "commander": "^6.2.1",
     "dotenv": "^10.0.0",
