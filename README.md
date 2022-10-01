@@ -10,9 +10,36 @@ npm link 链接过程
 /Users/zhangli/learning_code/zhangli-cli-dev/cli-test/zl-cli-test
 ```
 
+## lerna 基础
+为什么需要？原生脚手架开发会有很多痛点 
+* 重复操作
+  1. 多package本地link
+  2. 多package依赖安装
+  3. 多package单元测试
+  4. 多package代码提交
+  5. 多package代码发布
+* 版本一致性
+  1. 发布时版本一致性
+  2. 发布后相互依赖版本升级。（package越多，管理复杂度就越高）
+
+## 项目初始化
+```js
+npm i lerna -g
+lerna init
+
+// npm注册 组织 @zhangli-cli-dev
+```  
 ## lerna 核心操作
 
 [lerna 官网简介](https://lerna.js.org/)
+[lerna add ](https://github.com/lerna/lerna/tree/main/commands/add)
+```js
+// 指定安装到某一个package下
+lerna -h
+lerna add lodash-es utils/log
+// 安装依赖并且完成软连接
+lerna bootstrap 
+```
 
 ## 架构设计
 
