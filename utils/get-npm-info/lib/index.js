@@ -2,7 +2,7 @@
 const urlJoin = require('url-join');
 const axios = require('axios');
 const semver = require('semver');
-
+console.log(1);
 /**
  *
  * @param npmName 模块名 @zhangli-cli-dev/core
@@ -44,15 +44,15 @@ async function getNpmVersions(npmName, registry) {
 }
 
 /**
- * satisfies 满足某种条件 
- * @param {*} baseVersion 
+ * satisfies 满足某种条件
+ * @param {*} baseVersion
  * @param {*} versions 版本号集合
- * @returns 
+ * @returns
  */
 function getSemverVersions(baseVersion, versions) {
   return versions
     .filter((version) => semver.satisfies(version, `^${baseVersion}`)) // 大于
-    .sort((a, b) => semver.gt(b, a));  // b大于a，b在前 
+    .sort((a, b) => semver.gt(b, a)); // b大于a，b在前
   // 排序逻辑 npm返回的api可能没有排序,兼容处理
   // [ '1.0.5', '1.0.4' ]
 }
