@@ -1,6 +1,6 @@
 {
   "name": "@zhangli-cli-dev/init",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "init",
   "author": "zhangli20080808 <791492434@qq.com>",
   "homepage": "https://github.com/zhangli20080808/zhangli-cli-dev#readme",
@@ -27,9 +27,9 @@
     "url": "https://github.com/zhangli20080808/zhangli-cli-dev/issues"
   },
   "dependencies": {
-    "@zhangli-cli-dev/command": "^1.0.6",
-    "@zhangli-cli-dev/log": "^1.0.6",
-    "@zhangli-cli-dev/request": "^1.0.6",
+    "@zhangli-cli-dev/command": "^1.0.7",
+    "@zhangli-cli-dev/log": "^1.0.7",
+    "@zhangli-cli-dev/request": "^1.0.7",
     "fs-extra": "^9.1.0",
     "inquirer": "^8.2.0",
     "semver": "^7.3.5"

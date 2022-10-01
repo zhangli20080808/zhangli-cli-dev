@@ -1,6 +1,6 @@
 {
   "name": "@zhangli-cli-dev/package",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "npm modlue package",
   "keywords": [
     "zl"
@@ -30,9 +30,9 @@
     "url": "https://github.com/zhangli20080808/zhangli-cli-dev/issues"
   },
   "dependencies": {
-    "@zhangli-cli-dev/format-path": "^1.0.6",
+    "@zhangli-cli-dev/format-path": "^1.0.7",
     "@zhangli-cli-dev/get-npm-info": "file:../../utils/get-npm-info",
-    "@zhangli-cli-dev/utils": "^1.0.6",
+    "@zhangli-cli-dev/utils": "^1.0.7",
     "fs-extra": "^10.0.0",
     "npminstall": "^4.11.0",
     "path-exists": "^4.0.0",
