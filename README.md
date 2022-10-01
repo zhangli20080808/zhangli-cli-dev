@@ -1,3 +1,9 @@
+## 基础
+
+- 1. \_\_filename 代表当前执行文件 - 绝对路径
+- 2. \_\_dirname 代表当前文件运行的文件夹 - 绝对路径
+- 3. process.cwd() 当前工作目录下,是可以改变的
+
 ## lerna 核心操作
 
 [lerna 官网简介](https://lerna.js.org/)
@@ -105,11 +111,11 @@
 这样的架构设计已经可以满足一般脚手架需求，但是有以下两个问题：
 
 - cli 安装速度慢：所有 index 都集成在 cli 里，因此当命令较多时，会减慢 cli 的安装速度
-- 灵活性差：init 命令只能使用 @imooc-cli-dev/init 包，对于集团公司而言，每个 bu 的 init 命令可能都各不相同，可能需要实现 init 命令动态化，如：
+- 灵活性差：init 命令只能使用 @zhangli-cli-dev/init 包，对于集团公司而言，每个 bu 的 init 命令可能都各不相同，可能需要实现 init 命令动态化，如：
 
-1. 团队 A 使用 @imooc-cli-dev/init 作为初始化模块
-2. 团队 B 使用自己开发的 @imooc-cli-dev/my-init 作为初始化模块
-3. 团队 C 使用自己开发的 @imooc-cli-dev/your-init 作为初始化模块
+1. 团队 A 使用 @zhangli-cli-dev/init 作为初始化模块
+2. 团队 B 使用自己开发的 @zhangli-cli-dev/my-init 作为初始化模块
+3. 团队 C 使用自己开发的 @zhangli-cli-dev/your-init 作为初始化模块
 
 ![脚手架命令动态加载功能架构设计](./images/脚手架命令动态加载功能架构设计%20.png)
 
@@ -138,9 +144,12 @@
 
 - 检查 node 版本调整
 - 参数初始化
-- 利用node多进程执行动态命令
+- 利用 node 多进程执行动态命令
+
 ## 获取项目基本信息
+
 ## 模板相关
+
 ```js
 mongod --dbpath=/Users/zhangli/data/db
 ```
@@ -165,9 +174,10 @@ mongod --dbpath=/Users/zhangli/data/db
 - 确认项目的基本信息
 
 2. 下载模板
-   * 下载模板是利用已经封装 Package 类快速实现相关功能
-   * npm init egg -> npm init egg 相当于执行 npx create-egg，npx create-egg命令会下载create-egg库，再执行里面的bin(package.json里的bin字段)。npx create-egg 会在当前目录/node_modules目录下查找有没有create-egg，没有就会下载到临时目录，最后删除
-   * https://www.cnblogs.com/cool-fire/p/11007329.html
+
+   - 下载模板是利用已经封装 Package 类快速实现相关功能
+   - npm init egg -> npm init egg 相当于执行 npx create-egg，npx create-egg 命令会下载 create-egg 库，再执行里面的 bin(package.json 里的 bin 字段)。npx create-egg 会在当前目录/node_modules 目录下查找有没有 create-egg，没有就会下载到临时目录，最后删除
+   - https://www.cnblogs.com/cool-fire/p/11007329.html
 
 3. 安装模板
 

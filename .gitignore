@@ -2,3 +2,5 @@ node_modules
 .vscode
 .idea
 packages/**/node_modules
+cli-test/zl-test/node_modules
+cli-test/zl-test-lib/node_modules

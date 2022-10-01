@@ -1,7 +1,10 @@
 ## 命令基础
 
-node 的环境变量指向的就是 bin 这个文件夹，bin 下面的目录是用来存放可执行文件的，如果存在才会执行该命令。
-可以通过 <code>/usr/bin/env</code>  命令查看一下 node 的环境变量 - 针对 mac 环境
+- /usr/bin/env
+  node 的环境变量指向的就是 bin 这个文件夹，bin 下面的目录是用来存放可执行文件的，如果存在才会执行该命令。
+  可以通过 <code>/usr/bin/env</code> 命令查看一下 node 的环境变量 - 针对 mac 环境
+
+- echo $PATH - 找到所有环境变量
 
 ## 什么是脚手架
 
@@ -36,19 +39,51 @@ lrwxr  - l表示是一个软连接，实际指向node安装目录下面的vue.js
 
 通过 npm -g 安装的一些命令都会放到 /usr/local/lib/node_modules 目录下面
 
-● 在终端输入 vue create vue-test-app
-● 终端解析出 vue 命令
-● 终端在环境碧变量中找到 vue
-● 终端根据 vue 命令链接到实际文件 vue.js
-● 终端利用 node 执行 vue.js
-● vue.js 解析 command/options
-● vue.js 执行 command
-● 执行完毕，退出执行
+- 在终端输入 vue create vue-test-app
+- 终端解析出 vue 命令
+- 终端在环境碧变量中找到 vue
+- 终端根据 vue 命令链接到实际文件 vue.js
+- 终端利用 node 执行 vue.js
+- vue.js 解析 command/options
+- vue.js 执行 command
+- 执行完毕，退出执行
 
 ## 两种写法需要注意一下
+
 ```js
-#!/usr/bin/env/node
+#!/usr/bin/env node
 #!/usr/bin/node
 ```
-* 第一种是在环境变量中查找node
-* 第二种是执行 <code>/usr/bin</code> 目录下的node
+
+- 第一种是在环境变量中查找 node
+- 第二种是执行 <code>/usr/bin</code> 目录下的 node
+
+## 脚手架开发流程
+
+### 开发流程
+
+- 创建 npm 项目
+- 创建脚手架入口文件，在最上方添加 <code>#!/usr/bin/env node</code>
+- 配置 package.json，添加 bin 属性
+- 编写脚手架代码
+- 将脚手架发布到 npm
+
+### 开发难点
+
+- 分包: 将复杂的模块拆分成若干个模块
+- 命令注册
+- 比如 vue create / vue add /vue invoke
+- 参数解析
+  1. options 的全称： --version --help
+  2. options 的简写： -V -h
+  3. 带 params 的 options：--path /usr/zl/Desktop/xxx
+- 代码块 <code>vue command [options] <params></code>
+- 帮助文档 - global help
+
+### 参数解析
+```
+注册命名 zhangli-cli-dev init
+实现参数解析 --version init --name
+
+
+```
