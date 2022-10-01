@@ -15,7 +15,7 @@ const { isPlainObject } = require('@zhangli-cli-dev/utils');
 const {
   getDefaultRegistry,
   getNpmLatestVersion,
-} = require('@zhangli-cli-dev/get-npm-info');
+} = require('@zhangli-cli-dev/get-npm-infos');
 const formatPath = require('@zhangli-cli-dev/format-path');
 
 /**

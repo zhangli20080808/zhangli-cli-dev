@@ -31,12 +31,12 @@
   },
   "dependencies": {
     "@zhangli-cli-dev/format-path": "^1.0.7",
-    "@zhangli-cli-dev/get-npm-info": "file:../../utils/get-npm-info",
+    "@zhangli-cli-dev/get-npm-infos": "^1.0.0",
     "@zhangli-cli-dev/utils": "^1.0.7",
     "fs-extra": "^10.0.0",
     "npminstall": "^4.11.0",
     "path-exists": "^4.0.0",
     "pkg-dir": "^5.0.0"
   },
-  "gitHead": "e650c34c98a955db05a356c677830b4abb9ad922"
+  "gitHead": "e2ead08199c2e7de0a698e6c232cf515c8de7965"
 }

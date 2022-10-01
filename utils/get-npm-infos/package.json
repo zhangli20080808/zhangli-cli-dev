@@ -1,7 +1,7 @@
 {
-  "name": "@zhangli-cli-dev/log",
-  "version": "1.0.7",
-  "description": "zhangli-cli-dev log",
+  "name": "@zhangli-cli-dev/get-npm-infos",
+  "version": "1.0.0",
+  "description": "get npm info",
   "keywords": [
     "zl"
   ],
@@ -30,7 +30,8 @@
     "url": "https://github.com/zhangli20080808/zhangli-cli-dev/issues"
   },
   "dependencies": {
-    "npmlog": "^4.1.2"
-  },
-  "gitHead": "e2ead08199c2e7de0a698e6c232cf515c8de7965"
+    "axios": "^0.21.1",
+    "semver": "^7.3.5",
+    "url-join": "^4.0.1"
+  }
 }

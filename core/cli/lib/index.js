@@ -205,7 +205,7 @@ function registerCommand() {
 async function checkGlobalUpdate() {
   const currentVersion = pkg.version;
   const npmName = pkg.name;
-  const { getNpmSemverVersion } = require('@zhangli-cli-dev/get-npm-info');
+  const { getNpmSemverVersion } = require('@zhangli-cli-dev/get-npm-infos');
   const lastVersion = await getNpmSemverVersion(currentVersion, npmName);
   if (lastVersion && semver.gt(lastVersion, currentVersion)) {
     // TODO

@@ -1,5 +1,5 @@
 {
-  "name": "@zhangli-cli-dev/get-npm-info",
+  "name": "@zhangli-cli-dev/get-npm-info2",
   "version": "1.0.7",
   "description": "get npm info",
   "keywords": [
@@ -31,5 +31,5 @@
     "semver": "^7.3.5",
     "url-join": "^4.0.1"
   },
-  "gitHead": "e650c34c98a955db05a356c677830b4abb9ad922"
+  "gitHead": "e2ead08199c2e7de0a698e6c232cf515c8de7965"
 }

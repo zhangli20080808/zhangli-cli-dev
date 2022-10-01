@@ -39,6 +39,7 @@ lerna -h
 lerna add lodash-es utils/log
 // 安装依赖并且完成软连接
 lerna bootstrap 
+lerna create @zhangli-cli-dev/get-npm-infos utils 
 ```
 
 ## 架构设计
