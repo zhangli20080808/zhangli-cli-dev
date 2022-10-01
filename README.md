@@ -3,6 +3,12 @@
 - 1. \_\_filename 代表当前执行文件 - 绝对路径
 - 2. \_\_dirname 代表当前文件运行的文件夹 - 绝对路径
 - 3. process.cwd() 当前工作目录下,是可以改变的
+```
+npm link 链接过程
+/Users/zhangli/.nvm/versions/node/v16.15.1/bin/zl-cli-test ->
+/Users/zhangli/.nvm/versions/node/v16.15.1/lib/node_modules/zl-cli-test->
+/Users/zhangli/learning_code/zhangli-cli-dev/cli-test/zl-cli-test
+```
 
 ## lerna 核心操作
 

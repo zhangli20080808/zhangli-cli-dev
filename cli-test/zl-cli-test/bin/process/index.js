@@ -1,9 +1,35 @@
 const cp = require('child_process');
 const path = require('path');
-const argv = require('process').argv
-console.log('====================================');
-console.log(argv);
-console.log('====================================');
+const lib = require('zl-test-lib');
+const argv = require('process').argv;
+
+const command = argv[2];
+const options = argv.slice(3);
+
+if (options.length > 1) {
+  let [option, param] = options;
+  option = option.replace('--', '');
+  console.log(option, param); // zl-cli-test init --name vue-test
+  if (command) {
+    if (lib[command]) {
+      lib[command]({ option, param });
+    } else {
+      console.log('请输入命令');
+    }
+  } else {
+    console.log('请输入命令');
+  }
+}
+
+// 实现参数解析 --version和 init name
+if (command.startsWith('--') || command.startsWith('-')) {
+  const globalOption = command.replace(/--|-/, '');
+  console.log(globalOption);
+  if (globalOption === 'version' || globalOption === 'V') {
+    console.log('1.0.0');
+  }
+}
+
 let child;
 // stdout 输出结果， 错误的输出结果
 // child = cp.exec('ls -al', function (err, stdout, stderr) {
@@ -43,15 +69,15 @@ let child;
 // });
 
 // 主要用来执行一个文件
-cp.execFile(
-  path.resolve(__dirname, 'test.shell'),
-  ['-al', '-bl'],
-  function (err, stdout, stderr) {
-    console.log(err);
-    console.log(stdout);
-    console.log(stderr);
-  }
-);
+// cp.execFile(
+//   path.resolve(__dirname, 'test.shell'),
+//   ['-al', '-bl'],
+//   function (err, stdout, stderr) {
+//     console.log(err);
+//     console.log(stdout);
+//     console.log(stderr);
+//   }
+// );
 
 // // spawn: 耗时任务（比如：npm install），需要接收不断日志
 // const child2 = cp.spawn('npm', ['install'], {
