@@ -1,5 +1,5 @@
 {
-  "name": "get-npm-info",
+  "name": "@zhangli-cli-dev/get-npm-info",
   "version": "1.0.6",
   "description": "get npm info",
   "keywords": [
