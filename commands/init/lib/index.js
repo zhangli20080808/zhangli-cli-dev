@@ -33,7 +33,7 @@ class InitCommand extends Command {
       if (projectInfo) {
         // 拿到基本信息后，进行后续模板的下载安装
         log.verbose(projectInfo, 'projectInfo');
-        this.projectInfo = projectInfo
+        this.projectInfo = projectInfo;
         this.downTemplate();
       }
     } catch (e) {
@@ -49,7 +49,7 @@ class InitCommand extends Command {
    * 1.4 通过egg.js获取mongodb中的数据并且返回
    */
   downTemplate() {
-    console.log(this.projectInfo,this.template)
+    console.log(this.projectInfo, this.template);
   }
 
   /**
@@ -68,7 +68,7 @@ class InitCommand extends Command {
     if (!template || template.length === 0) {
       throw new Error('项目模板不存在');
     }
-    this.template = template
+    this.template = template;
     const localPath = process.cwd();
     const ret = this.isDirEmpty(localPath);
     if (!ret) {
@@ -161,7 +161,7 @@ class InitCommand extends Command {
           type: 'input',
           name: 'projectVersion',
           message: '请输入项目版本号',
-          default: '',
+          default: '1.0.0',
           validate: function (v) {
             const done = this.async();
             setTimeout(() => {
@@ -179,6 +179,12 @@ class InitCommand extends Command {
               return v;
             }
           },
+        },
+        {
+          type: 'list',
+          name: 'projectTemplate',
+          message: '请选择项目模板',
+          choices: this.createTemplateChoice(),
         },
       ]);
       projectInfo = {
@@ -201,6 +207,13 @@ class InitCommand extends Command {
       (file) => !file.startsWith('.') && ['node_modules'].indexOf(file) < 0
     );
     return !fileList || fileList.length <= 0;
+  }
+
+  createTemplateChoice() {
+    return this.template.map((item) => ({
+      value: item.npmName,
+      name: item.name,
+    }));
   }
 }
 function init(argv) {
