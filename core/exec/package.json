@@ -30,7 +30,8 @@
     "url": "https://github.com/zhangli20080808/zhangli-cli-dev/issues"
   },
   "dependencies": {
-    "@zhangli-cli-dev/log": "file:../../utils/log",
-    "@zhangli-cli-dev/package": "file:../../models/package"
-  }
+    "@zhangli-cli-dev/log": "^1.0.6",
+    "@zhangli-cli-dev/package": "^1.0.6"
+  },
+  "gitHead": "e650c34c98a955db05a356c677830b4abb9ad922"
 }

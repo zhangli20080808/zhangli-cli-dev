@@ -22,16 +22,16 @@
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
-  "gitHead": "726f078e0211b1a7ae8b537a88cf910875c1a1bb",
+  "gitHead": "e650c34c98a955db05a356c677830b4abb9ad922",
   "publishConfig": {
     "access": "public"
   },
   "dependencies": {
-    "@zhangli-cli-dev/exec": "file:../exec",
+    "@zhangli-cli-dev/exec": "^1.0.6",
     "@zhangli-cli-dev/get-npm-info": "file:../../utils/get-npm-info",
-    "@zhangli-cli-dev/init": "file:../../commands/init",
-    "@zhangli-cli-dev/log": "file:../../utils/log",
-    "@zhangli-cli-dev/utils": "file:../../utils/utils",
+    "@zhangli-cli-dev/init": "^1.0.6",
+    "@zhangli-cli-dev/log": "^1.0.6",
+    "@zhangli-cli-dev/utils": "^1.0.6",
     "colors": "^1.4.0",
     "commander": "^6.2.1",
     "dotenv": "^10.0.0",

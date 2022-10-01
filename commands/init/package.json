@@ -27,11 +27,12 @@
     "url": "https://github.com/zhangli20080808/zhangli-cli-dev/issues"
   },
   "dependencies": {
-    "@zhangli-cli-dev/command": "file:../../models/command",
-    "@zhangli-cli-dev/log": "file:../../utils/log",
-    "@zhangli-cli-dev/request": "file:../../utils/request",
+    "@zhangli-cli-dev/command": "^1.0.6",
+    "@zhangli-cli-dev/log": "^1.0.6",
+    "@zhangli-cli-dev/request": "^1.0.6",
     "fs-extra": "^9.1.0",
     "inquirer": "^8.2.0",
     "semver": "^7.3.5"
-  }
+  },
+  "gitHead": "e650c34c98a955db05a356c677830b4abb9ad922"
 }
