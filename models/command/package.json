@@ -1,6 +1,6 @@
 {
   "name": "@zhangli-cli-dev/command",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "zhangli-cli-dev/command",
   "keywords": [
     "command",
@@ -31,10 +31,11 @@
     "url": "https://github.com/zhangli20080808/zhangli-cli-dev/issues"
   },
   "dependencies": {
-    "@zhangli-cli-dev/log": "^1.0.7",
-    "@zhangli-cli-dev/utils": "^1.0.7",
+    "@zhangli-cli-dev/log": "^1.0.8",
+    "@zhangli-cli-dev/utils": "^1.0.8",
     "colors": "^1.4.0",
-    "semver": "^7.3.5"
+    "semver": "^7.3.5",
+    "undefined": "/Users/zhangli/learning_code/zhangli-cli-dev"
   },
   "gitHead": "e2ead08199c2e7de0a698e6c232cf515c8de7965"
 }
