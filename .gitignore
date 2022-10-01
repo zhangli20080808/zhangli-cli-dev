@@ -5,3 +5,8 @@ packages/**/node_modules
 packages/**/package-lock.json
 cli-test/zl-test/node_modules
 cli-test/zl-test-lib/node_modules
+
+core/**/package-lock.json
+commands/**/package-lock.json
+models/**/package-lock.json
+utils/**/package-lock.json
