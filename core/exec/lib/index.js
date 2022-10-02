@@ -28,6 +28,7 @@ const log = require('@zhangli-cli-dev/log');
 
 // 如果我们当前有不同的团队，可以把当前用户登录的信息和命令信息传递到服务端
 // key 以及key对应的包名,拿到这个package
+// 测试单独包的发布
 const SETTINGS = {
   init: '@imooc-cli/init',
   // init: '@zhangli-cli-dev/init',
