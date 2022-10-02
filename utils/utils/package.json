@@ -1,6 +1,6 @@
 {
   "name": "@zhangli-cli-dev/utils",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "> TODO: description",
   "author": "zhangli20080808 <791492434@qq.com>",
   "homepage": "",
@@ -19,6 +19,5 @@
   "gitHead": "e2ead08199c2e7de0a698e6c232cf515c8de7965",
   "publishConfig": {
     "access": "public"
-  },
-  "dependencies": {}
+  }
 }
