@@ -30,7 +30,5 @@
     "url": "https://github.com/zhangli20080808/zhangli-cli-dev/issues"
   },
   "gitHead": "e2ead08199c2e7de0a698e6c232cf515c8de7965",
-  "dependencies": {
-    "undefined": "/Users/zhangli/learning_code/zhangli-cli-dev"
-  }
+  "dependencies": {}
 }

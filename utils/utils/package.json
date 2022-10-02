@@ -20,7 +20,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "dependencies": {
-    "undefined": "/Users/zhangli/learning_code/zhangli-cli-dev"
-  }
+  "dependencies": {}
 }

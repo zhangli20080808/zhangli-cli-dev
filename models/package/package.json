@@ -36,8 +36,7 @@
     "fs-extra": "^10.0.0",
     "npminstall": "^4.11.0",
     "path-exists": "^4.0.0",
-    "pkg-dir": "^5.0.0",
-    "undefined": "/Users/zhangli/learning_code/zhangli-cli-dev"
+    "pkg-dir": "^5.0.0"
   },
   "gitHead": "e2ead08199c2e7de0a698e6c232cf515c8de7965"
 }

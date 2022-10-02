@@ -34,8 +34,7 @@
     "@zhangli-cli-dev/log": "^1.0.9",
     "@zhangli-cli-dev/utils": "^1.0.9",
     "colors": "^1.4.0",
-    "semver": "^7.3.5",
-    "undefined": "/Users/zhangli/learning_code/zhangli-cli-dev"
+    "semver": "^7.3.5"
   },
   "gitHead": "e2ead08199c2e7de0a698e6c232cf515c8de7965"
 }

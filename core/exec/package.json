@@ -31,8 +31,7 @@
   },
   "dependencies": {
     "@zhangli-cli-dev/log": "^1.0.9",
-    "@zhangli-cli-dev/package": "^1.0.9",
-    "undefined": "/Users/zhangli/learning_code/zhangli-cli-dev"
+    "@zhangli-cli-dev/package": "^1.0.9"
   },
   "gitHead": "e2ead08199c2e7de0a698e6c232cf515c8de7965"
 }

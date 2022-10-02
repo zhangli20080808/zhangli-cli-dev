@@ -40,7 +40,6 @@
     "path-exists": "^4.0.0",
     "root-check": "^1.0.0",
     "semver": "^7.3.5",
-    "undefined": "/Users/zhangli/learning_code/zhangli-cli-dev",
     "user-home": "^3.0.0"
   }
 }

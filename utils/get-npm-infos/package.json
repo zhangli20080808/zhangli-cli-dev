@@ -32,7 +32,6 @@
   "dependencies": {
     "axios": "^0.21.1",
     "semver": "^7.3.5",
-    "undefined": "/Users/zhangli/learning_code/zhangli-cli-dev",
     "url-join": "^4.0.1"
   }
 }
