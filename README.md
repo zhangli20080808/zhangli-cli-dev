@@ -32,6 +32,7 @@ npm link 链接过程
   - 大幅减少重复操作
   - 提升操作的标准化
 
+
 ## 项目初始化
 
 ```js
@@ -56,7 +57,7 @@ lerna create @zhangli-cli-dev/get-npm-infos utils
 
 lerna updated // 查看更新包
 ```
-
+## 
 ## 架构设计
 
 1. 脚手架
