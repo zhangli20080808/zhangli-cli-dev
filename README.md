@@ -83,7 +83,7 @@ lerna updated // 查看更新包
 
 ## 脚手架拆包策略 - 拆包结果
 
-![](./images/脚手架架构设计图.png)
+![](./images/脚手架架构设计图.jpg)
 ![](./images/设计缺陷思考.png)
 
 - 核心流程：index
