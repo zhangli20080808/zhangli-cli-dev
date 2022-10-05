@@ -114,9 +114,7 @@ lrwxr  - l表示是一个软连接，实际指向node安装目录下面的vue.js
 - 帮助文档 - global help
 
 ### 工具
-```js
-
-```
+1. yargs 实践学习 - cli-test/zl-cli-test/bin/yargs.js
 
 ### 参数解析
 ```
