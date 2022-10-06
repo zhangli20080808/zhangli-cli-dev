@@ -115,7 +115,10 @@ lrwxr  - l表示是一个软连接，实际指向node安装目录下面的vue.js
 
 ### 工具
 1. yargs 实践学习 - cli-test/zl-cli-test/bin/yargs.js
-
+2. pkg-dir -> find-up
+3. path-exists   判断一个路径是否存在 主要封装fs
+4. locate-path  获取第一个路径，存在于磁盘上的从多个路径中。回去找是否存在传入的路径，如果存在，返回第一个
+5. find-up 该库用于在某个目录下向上找指定文件找到返回该文件路径，找不到返回null
 ### 参数解析
 ```
 注册命名 zhangli-cli-dev init

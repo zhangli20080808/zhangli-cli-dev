@@ -26,7 +26,8 @@
     "rxjs": "^6.6.3",
     "semver": "^7.3.4",
     "user-home": "^2.0.0",
-    "yargs": "^16.2.0"
+    "yargs": "^16.2.0",
+    "npmlog": "6.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",

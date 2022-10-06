@@ -1,6 +1,7 @@
 const yargs = require('yargs/yargs');
 const dedent = require('dedent');
 const pkg = require('../package.json');
+const log = require('npmlog')
 // dedent 去掉缩进
 const cli = yargs();
 const argv = process.argv.slice(2);
@@ -18,8 +19,24 @@ cli
   )
   .strict() // 严格模式
   .recommendCommands() // 命令输入错误的时候，返回近似的命令做提示
-  .fail((err, msg) => { // 处理命令执行失败的情况展示
+  .fail((err, msg) => {
+    // 处理命令执行失败的情况展示
     console.log(err);
+    // certain yargs validations throw strings :P
+    const actual = err || new Error(msg);
+
+    // ValidationErrors are already logged, as are package errors
+    if (actual.name !== 'ValidationError' && !actual.pkg) {
+      // the recommendCommands() message is too terse
+      if (/Did you mean/.test(actual.message)) {
+        log.error('lerna', `Unknown command "${cli.parsed.argv._[0]}"`);
+      }
+
+      log.error('lerna', actual.message);
+    }
+
+    // exit non-zero so the CLI can be usefully chained
+    cli.exit(actual.exitCode > 0 ? actual.exitCode : 1, actual);
   })
   .alias('h', 'help') // 别名
   .alias('v', 'version')
@@ -59,7 +76,7 @@ cli
         type: 'string',
         describe: 'Name of a project',
         // 注意脚手架的别名不要重复
-        alias: 'n', // zl-cli-test init -n aaa    zl-cli-test init -d -r npm -n vue-test 
+        alias: 'n', // zl-cli-test init -n aaa    zl-cli-test init -d -r npm -n vue-test
       });
     },
     (argv) => {
@@ -78,7 +95,7 @@ cli
       // const utils = require('/Users/sam/Desktop/vue-test/zl-test/bin/utils'); // absolute path
       // const pkg = require('../../zl-test-lib/package.json'); // load json
       // const undefinedModule = require('./file'); // undefined module
-      console.log(argv,'list');
+      console.log(argv, 'list');
     },
   })
   .option('verbose', {
@@ -101,4 +118,4 @@ cli
     }
   )
 
-  .parse(argv, context);
+  .parse(argv, context); // parse最大的优点是可以向argv对象中注入参数
