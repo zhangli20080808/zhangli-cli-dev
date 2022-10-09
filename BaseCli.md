@@ -124,6 +124,8 @@ lrwxr  - l表示是一个软连接，实际指向node安装目录下面的vue.js
 注册命名 zhangli-cli-dev init
 实现参数解析 --version init --name
 ```
-
-
+### 分析架构设计
+### 模块拆分策略和core模块技术实现
+### 执行准备过程实现
+### 命令注册实现，基于commander
 
