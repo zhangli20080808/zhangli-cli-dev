@@ -19,15 +19,6 @@ const program = new commander.Command(); // 手动实例化一个commander实例
 
 module.exports = core;
 
-/**
- * require 支持加载的类型资源 .js/.json/.node
- * .js -> module.exports/exports
- *
- * .json -> JSON.parse
- * .node -> C++ 插件，通过process.dlopen去打开，实际开发用不到
- * any -> 会默认使用js引擎去解析，当成一个js文件 比如 require('a.txt')->返回hello
- * .md是不行的，因为解析不成js代码，但是如果我们把内容改成一段js代码，就可以
- */
 async function core() {
   try {
     await prepare();
@@ -41,6 +32,11 @@ async function core() {
   }
 }
 
+/**
+ * 1. 检查版本号
+ * 2. 检查版本号
+ * 1. 检查版本号
+ */
 async function prepare() {
   checkPkgVersion();
   checkRoot();

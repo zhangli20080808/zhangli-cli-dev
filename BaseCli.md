@@ -119,6 +119,15 @@ lrwxr  - l表示是一个软连接，实际指向node安装目录下面的vue.js
 3. path-exists   判断一个路径是否存在 主要封装fs
 4. locate-path  获取第一个路径，存在于磁盘上的从多个路径中。回去找是否存在传入的路径，如果存在，返回第一个
 5. find-up 该库用于在某个目录下向上找指定文件找到返回该文件路径，找不到返回null
+
+### require支持加载的文件
+require 支持加载的类型资源 .js/.json/.node
+1. .js -> module.exports/exports
+2. .json -> JSON.parse
+3. .node -> C++ 插件，通过process.dlopen去打开，实际开发用不到
+4. any -> 会默认使用js引擎去解析，当成一个js文件 比如 require('a.txt')->返回hello
+5. .md是不行的，因为解析不成js代码，但是如果我们把内容改成一段js代码，就可以
+
 ### 参数解析
 ```
 注册命名 zhangli-cli-dev init

@@ -109,7 +109,7 @@ lerna updated // 查看更新包
 ![](./images/设计缺陷思考.png)
 
 - 核心流程：core
-- 命令： commands
+- 命令： commands(管理脚手架相关命令)
   1. 初始化
   2. 发布
   3. 清除缓存
@@ -119,7 +119,7 @@ lerna updated // 查看更新包
   3. Component 组件
   4. Npm 模块
   5. Git 仓库
-- 支撑模块： utils
+- 支撑模块： utils(一些辅助工具)
   1. git 操作
   2. 云构建
   3. 工具方法
@@ -130,12 +130,12 @@ lerna updated // 查看更新包
 
 根据模块的功能拆分：
 
-1. 核心模块：index
+1. 核心模块：core
 2. 命令模块：commands
 3. 模型模块：models
 4. 工具模块：utils
 
-## index 模块技术方案
+## core 模块技术方案
 
 ![](./images/命令执行流程.png)
 
@@ -161,20 +161,20 @@ lerna updated // 查看更新包
 1. 核心库
 
 - import-local - 用于优先执行本地的命令
-- commander - 通过 commander 做命令注册
+- commander - 通过 commander 做命令注册,lerna使用的是yargs，对比学习
 
-2. 工具
+2. [工具](http://t.zoukankan.com/cangqinglang-p-14761536.html)
 
 - npmlog - 打印日志
 - fs-extra - 基于 fs 封装的很多有价值的文件操作
-- path-exists
+- path-exists - 检查路径是否存在
 - minimist 检查入参
 - semver - 版本比对，比如是否是最新版本
 - colors - 在终端中打印不同颜色的文本
 - user-home - 帮我们快速拿到用户的主目录
 - dotenv - 获取环境变量
 - root-check - root 账户的一个检查，自动降级
-- url-join
+- url-join - 用 url-join 包可以非常方便地操作一个 url，拼接任意参数
 
 ## 命令的注册
 
