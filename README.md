@@ -167,7 +167,7 @@ lerna updated // 查看更新包
 
 - npmlog - 打印日志
 - fs-extra - 基于 fs 封装的很多有价值的文件操作
-- path-exists - 检查路径是否存在
+- path-exists - 检查文件是否存在
 - minimist 检查入参
 - semver - 版本比对，比如是否是最新版本
 - colors - 在终端中打印不同颜色的文本

@@ -31,11 +31,12 @@ async function core() {
     }
   }
 }
-
 /**
  * 1. 检查版本号
- * 2. 检查版本号
- * 1. 检查版本号
+ * 2. 检查跟路径
+ * 3. 检查用户主目录
+ * 4. 检查环境变量
+ * 5. 检查 脚手架是否需要更新
  */
 async function prepare() {
   checkPkgVersion();
@@ -52,7 +53,7 @@ function checkPkgVersion() {
 }
 
 /**
- * root-check
+ * root-check - 检查当前是否是root用户登录，直接调用，实现降级
  * sudo 启动  process.getuid() -> 0,普通启动 -> 501
  * 通过 root 降级
  * sudo 启动后 仍然是501

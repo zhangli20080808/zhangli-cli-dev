@@ -10,7 +10,7 @@ const log = require('npmlog');
  * 3. heading 在log之前添加前缀
  */
 log.level = process.env.LOG_LEVEL ? process.env.LOG_LEVEL : 'info';
-log.heading = 'zhangLi';
+log.heading = 'zhangLi-cli-dev';
 log.headingStyle = { fg: 'red', bg: 'black' }; // 修改前缀
 log.addLevel('success', 2000, { fg: 'green', bold: true });
 
