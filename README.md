@@ -168,13 +168,13 @@ lerna updated // 查看更新包
 - npmlog - 打印日志
 - fs-extra - 基于 fs 封装的很多有价值的文件操作
 - path-exists - 检查文件是否存在
-- minimist 检查入参
+- minimist - 检查入参
 - semver - 版本比对，比如是否是最新版本
 - colors - 在终端中打印不同颜色的文本
 - user-home - 帮我们快速拿到用户的主目录
 - dotenv - 获取环境变量
 - root-check - root 账户的一个检查，自动降级
-- url-join - 用 url-join 包可以非常方便地操作一个 url，拼接任意参数
+- url-join - 用 url-join 包可以非常方便地操作一个 url，拼接任意参数，不需要考虑 斜杠等（https://www.npmjs.com/package/url-join）
 
 ## 命令的注册
 

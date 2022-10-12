@@ -1,6 +1,5 @@
 'use strict';
 const path = require('path');
-const log = require('@zhangli-cli-dev/log');
 const semver = require('semver');
 const colors = require('colors');
 const rootCheck = require('root-check');
@@ -9,8 +8,9 @@ const pathExist = require('path-exists').sync;
 const commander = require('commander');
 // const init = require('@zhangli-cli-dev/init');
 const exec = require('@zhangli-cli-dev/exec');
+const log = require('@zhangli-cli-dev/log');
 
-const constants = require('../constants');
+const constants = require('./constants');
 const pkg = require('../package.json');
 
 // 两种方式
@@ -42,14 +42,15 @@ async function prepare() {
   checkPkgVersion();
   checkRoot();
   checkUseHome();
+  // checkInputArgs()
+  // log.verbose('debug','debug...test')
   checkEnv();
-  await checkGlobalUpdate();
+  await checkGlobalUpdate(); 
 }
 
 function checkPkgVersion() {
   log.info('cli', pkg.version);
   // log.success('test','success...')
-  // log.verbose('debug','debug...')
 }
 
 /**
@@ -74,51 +75,58 @@ function checkUseHome() {
 }
 
 /**
- * 在这边检查入参主要是为了 是否是要进入调试模 式
- * 比如要打印一些 debug 信息 --debug 继而在log模块设置 环境变量 LOG_LEVEL
+ * 在这边检查入参主要是为了 是否是要进入调试模式
+ * 比如要打印一些 debug 信息
+ * --debug 继而在log模块设置 环境变量 LOG_LEVEL
  */
+let args;
+function checkInputArgs () {
+  const minimist = require('minimist')
+  args = minimist(process.argv.slice(2))
+  // console.log(args) // { _: [], d:true 或者  debug: true, scope: true }
+  checkArgs()
+}    
 
-// function checkInputArgs () {
-//   const minimist = require('minimist')
-//   args = minimist(process.argv.slice(2))
-//   // console.log(args) // { _: [], debug: true, scope: true }
-//   checkArgs()
-// }
-
-// function checkArgs () {
-//   process.env.LOG_LEVEL = args.debug ? 'verbose' : 'info'
-//   log.level = process.env.LOG_LEVEL
-// }
+function checkArgs () {
+  process.env.LOG_LEVEL = (args.debug || args.d) ? 'verbose' : 'info'
+  log.level = process.env.LOG_LEVEL
+}
 
 /**
+ 主目录 - /Users/zhangli/.env
  * 检查环境变量
  * 可以在操作系统中配置一些环境变量，将我们一些用户名，密码，敏感信息保存在我们用户的本地,而不用集成到代码当中
  * 需要的时候就可以实时进行读取，同时也可以做很多默认的配置信息
  * CLI_HOME=.zhangli-cli 缓存主目录
  */
 function checkEnv() {
-  // const dotenv = require('dotenv')
-  // const dotenvPath = path.resolve(userHome,'.env')
-  // if(pathExist(dotenvPath)){
-  //   config = dotenv.config({
-  //     path: dotenvPath
-  //   })
+  // console.log(process.cwd()); // 那个目录执行的命令，比如/Users/zhangli下，输出/Users/zhangli
+  // const dotenv = require('dotenv');
+  // const dotenvPath = path.resolve(userHome, '.env');
+  // if (pathExist(dotenvPath)) {
+  //   dotenv.config({
+  //     path: dotenvPath,
+  //   });
   // }
-  // log.verbose('环境变量',config,process.env.DB_USER) // { parsed: { CLI_HOME: '.zhangli-cli', DB_USER: 'root' } } root
-  // 用户没有配置 CLI_HOME
+  // log.verbose('环境变量', config, process.env.DB_USER);
+  // { parsed: { CLI_HOME: '.zhangli-cli', DB_USER: 'root' } } root
+  // 如果用户没有配置 CLI_HOME，读取不到，创建默认配置
   createDefaultConfig();
-  // log.verbose('环境变量', process.env.CLI_HOME_PATH); // { parsed: { CLI_HOME: '.zhangli-cli', DB_USER: 'root' } } root
+  // log.verbose('环境变量', process.env.CLI_HOME_PATH);
+  // { parsed: { CLI_HOME: '.zhangli-cli', DB_USER: 'root' } } root
 }
 
 function createDefaultConfig() {
   const cliConfig = {
     home: userHome,
   };
+  // 脚手架主目录
   if (process.env.CLI_HOME) {
     cliConfig['cliHome'] = path.join(userHome, process.env.CLI_HOME);
   } else {
     cliConfig['cliHome'] = path.join(userHome, constants.DEFAULT_CLI_HOME);
   }
+  // 对环境变量中的值处理之后生成新的变量 - 缓存路径
   process.env.CLI_HOME_PATH = cliConfig.cliHome;
   // console.log(process.env.CLI_HOME_PATH); // /Users/zhangli/.zhangli-cli-dev
 }
