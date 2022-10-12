@@ -45,7 +45,7 @@ async function prepare() {
   // checkInputArgs()
   // log.verbose('debug','debug...test')
   checkEnv();
-  await checkGlobalUpdate(); 
+  await checkGlobalUpdate();
 }
 
 function checkPkgVersion() {
@@ -80,16 +80,16 @@ function checkUseHome() {
  * --debug 继而在log模块设置 环境变量 LOG_LEVEL
  */
 let args;
-function checkInputArgs () {
-  const minimist = require('minimist')
-  args = minimist(process.argv.slice(2))
+function checkInputArgs() {
+  const minimist = require('minimist');
+  args = minimist(process.argv.slice(2));
   // console.log(args) // { _: [], d:true 或者  debug: true, scope: true }
-  checkArgs()
-}    
+  checkArgs();
+}
 
-function checkArgs () {
-  process.env.LOG_LEVEL = (args.debug || args.d) ? 'verbose' : 'info'
-  log.level = process.env.LOG_LEVEL
+function checkArgs() {
+  process.env.LOG_LEVEL = args.debug || args.d ? 'verbose' : 'info';
+  log.level = process.env.LOG_LEVEL;
 }
 
 /**
@@ -161,7 +161,7 @@ function registerCommand() {
       process.env.LOG_LEVEL = 'info';
     }
     log.level = process.env.LOG_LEVEL;
-    // log.verbose('test')
+    // log.verbose('test')  
   });
 
   // 指定全局的 targetPath, 这里属性监听有一个比较好的地方就是，他可以在我们执行业务逻辑之前去执行
@@ -174,9 +174,9 @@ function registerCommand() {
 
   // 对未知命令的监听
   program.on('command:*', function (obj) {
-    const availableCommand = program.commands.map((cmd) => cmd.name());
+    const availableCommand = program.commands.map((cmd) => cmd.name()); // 所有命令
     // console.log(obj); // ['test']
-    // console.log(colors.red(`无效的命令：${obj[0]}`));
+    console.log(colors.red(`未知的命令：${obj[0]}`));
     if (availableCommand.length > 0) {
       console.log(colors.red(`有效的命令：${availableCommand.join(',')}`));
     }
@@ -190,9 +190,10 @@ function registerCommand() {
   // })
 
   program.parse(process.argv);
-  // 更好的判断方式是对 program 参数进行解析
+  // 更好的判断方式是对 program 参数进行解析 -> args:['test']
   if (program.args && program.args.length < 1) {
     program.outputHelp();
+    console.log();
   }
   // if (process.argv.length < 3) {
   //   program.outputHelp();
