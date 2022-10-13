@@ -139,3 +139,5 @@ require 支持加载的类型资源 .js/.json/.node
 ### 执行准备过程实现
 ### 命令注册实现，基于commander
 
+## Node多进程开发学习
+[Node多进程开发学习](https://www.yuque.com/u262589/ahs3ov/rhz6v6)
