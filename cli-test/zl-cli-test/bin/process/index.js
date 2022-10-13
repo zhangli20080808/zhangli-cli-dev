@@ -119,8 +119,10 @@ exec - 执行shell脚本  ls -al|grep node_modules
 // });
 
 // fork：Node(main) -> Node(child) 主要用来创建子进程，子进程当中使用node去执行命令
-// 与require执行js的不同。  通常的文件都是在node主进程中去执行，不管通过require方法还是别的
-// 在fork 中，会启动两个Node进程 ，1个main 1个 child,Node(main) -> Node(child),在子进程中会独立启动v8引擎去解析child.js,并执行代码。两个进程完全独立
+// 1. 与require执行js的不同。  通常的文件都是在node主进程中去执行，不管通过require方法还是别的。
+// 2. 在fork 中，会启动两个Node进程 ，1个main 1个 child,Node(main) -> Node(child),在子进程中会独立启动v8引擎去解析child.js,并执行代码。两个进程完全独立
+// 3. 主进程通过send、on发送和监听消息。子进程只能通过process，因为子进程没法直接感知到主进程的存在
+// 4. 使用场景 - 一些耗时操作，通过nodejs实现的。比如下载文件，在这个过程中可以不断地向主进程中传递消息
 const child3 = cp.fork(path.resolve(__dirname, 'child.js')); // 通过fork命令执行了 child.js文件
 // 在进程间通信，向子进程发送消息
 child3.send('hello child process!', () => {
