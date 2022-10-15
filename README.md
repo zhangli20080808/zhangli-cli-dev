@@ -210,10 +210,10 @@ lerna updated // 查看更新包
 
 ## 环境变量总结
 
+- CLI_TARGET_PATH - 调试目录 /Users/zhangli/learning_code/zhangli-cli-dev/commands/init
+- CLI_HOME - .zhangli-cli 缓存主目录
 - CLI_HOME_PATH - 缓存目录 /Users/zhangli/.zhangli-cli-dev
-- CLI_HOME
 - LOG_LEVEL
-- CLI_TARGET_PATH - 调试目录
 
 ## 进程相关概念学习
 
