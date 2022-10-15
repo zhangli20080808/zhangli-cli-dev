@@ -1,3 +1,16 @@
+
+# exec参数不固定，使用argument解析
+```js
+const clone = program.command('clone <source> [destination]');
+clone
+  .description('clone a repository')
+  .option('-f, --force', '是否强制克隆')
+  .action((source, destination, cmdObj) => {
+    // zl-cli-test clone aaa xxx -f  -> aaa xxx true
+    console.log(source, destination, cmdObj.force);
+  });
+```
+
 # Node 多进程学习总结
 ## 什么是进程
 进程（Process）是计算机中的程序关于某数据集合上的一次运行活动，是系统进行资源分配和调度的基本单位，是操作系统结构的基础。启动一个程序，必须要对应一个进程。

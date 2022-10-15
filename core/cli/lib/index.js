@@ -161,7 +161,7 @@ function registerCommand() {
       process.env.LOG_LEVEL = 'info';
     }
     log.level = process.env.LOG_LEVEL;
-    // log.verbose('test')  
+    // log.verbose('test')
   });
 
   // 指定全局的 targetPath, 这里属性监听有一个比较好的地方就是，他可以在我们执行业务逻辑之前去执行

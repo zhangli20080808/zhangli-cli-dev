@@ -20,10 +20,10 @@ const formatPath = require('@zhangli-cli-dev/format-path');
 
 /**
  * 通过 Package 去实例化 Package对象 
- * 1. package是否存在 exists
- * 2. package 安装 install
- * 3. 更新 update
- * 4. 获取入口文件的路径 getRootFile
+ * 1. exists - package是否存在 
+ * 2. install
+ * 3. update
+ * 4. getRootFile - 获取入口文件的路径
  */
 class Package {
   constructor(options) {
@@ -35,10 +35,10 @@ class Package {
     }
     // package 的目标路径
     this.targetPath = options.targetPath;
-    // 缓存package的路径
+    // package缓存在本地的路径
     this.storeDir = options.storeDir;
     // package 的包名
-    this.packageName = options.packageName;
+    this.packageName = options.packageName; 
     // package 的版本
     this.packageVersion = options.packageVersion;
     // 缓存目录前缀

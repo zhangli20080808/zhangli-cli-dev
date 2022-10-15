@@ -35,8 +35,8 @@ b. 在根据 modulePath 生成一个 Package，再将 modulePath 生成一个 Pa
 比如 modulePath 指向 init 目录，他本身就是一个 npm 模块，我们可以将其抽象成一个 Package，和普通模块没什么区别
 c. 利用 Package 帮我们提供一些方法,比如 Package.getRootFile(获取入口文件),这样就可以将我们所有获取入口文件中存在的隐含逻辑全部包含进去，各种逻辑通过 Package 完善
 
-比如 package.json 我们是通过 main 去找入口，如果没有，去找 lib，通过 api 的方式，不用将 getRootFile 的逻辑全部写在 exec 里面 -> 实现封装，更好的复用
-d. 实现 Package.update/Package.install，更新、安装方法等
+比如 package.json 我们是通过 main 去找入口，如果没有，去找 lib，通过 api 的方式，不用将 getRootFile 的逻辑全部写在 exec 里面 -> 实现封装，更好的复用(比如获取到缓存目录之后，也是需要安装的，init有可能不在本地)
+d. 实现 Package.update/Package.install，更新、安装方法等 - 整体类的概念
 
 2.  如果本地没有，需要通过动态的将代码下载下来，且加载进去。
 

@@ -8,8 +8,8 @@ const log = require('@zhangli-cli-dev/log');
 // key 以及key对应的包名,拿到这个package
 // 测试单独包的发布
 const SETTINGS = {
-  init: '@imooc-cli/init',
-  // init: '@zhangli-cli-dev/init',
+  // init: '@imooc-cli/init',
+  init: '@zhangli-cli-dev/init',
 };
 
 // 将所有的缓存目录放入 dependencies 下
