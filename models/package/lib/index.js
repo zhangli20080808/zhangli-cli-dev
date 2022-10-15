@@ -8,7 +8,7 @@
  */
 const path = require('path');
 const pkgDir = require('pkg-dir').sync;
-const npminstall = require('npminstall');
+const npmInstall = require('npminstall');
 const pathExist = require('path-exists').sync;
 const fse = require('fs-extra');
 const { isPlainObject } = require('@zhangli-cli-dev/utils');
@@ -19,8 +19,8 @@ const {
 const formatPath = require('@zhangli-cli-dev/format-path');
 
 /**
- * 通过 Package 去实例化 Package对象 
- * 1. exists - package是否存在 
+ * 通过 Package 去实例化 Package对象
+ * 1. exists - package是否存在
  * 2. install
  * 3. update
  * 4. getRootFile - 获取入口文件的路径
@@ -33,12 +33,12 @@ class Package {
     if (!isPlainObject(options)) {
       throw new Error('Package 类的参数类型必须为object');
     }
-    // package 的目标路径
+    // package 的目标路径, 也是整个依赖的路径
     this.targetPath = options.targetPath;
-    // package缓存在本地的路径
+    // package 缓存在本地的路径，在缓存路径上 + node_modules
     this.storeDir = options.storeDir;
     // package 的包名
-    this.packageName = options.packageName; 
+    this.packageName = options.packageName;
     // package 的版本
     this.packageVersion = options.packageVersion;
     // 缓存目录前缀
@@ -46,10 +46,11 @@ class Package {
   }
 
   /**
+   * 字符串存在，路径也要存在
    * 将 packageVersion，latest转换成具体的版本，因为具体查的时候，还是要看版本号的
    */
   async prepare() {
-    // 字符串存在，路径也要存在
+
     if (this.storeDir && !pathExist(this.storeDir)) {
       // 一次性创建完所有目录
       fse.mkdirpSync(this.storeDir);
@@ -58,7 +59,7 @@ class Package {
       this.packageVersion = await getNpmLatestVersion(this.packageName);
     }
     // console.log(this.packageVersion)
-  }
+  } 
 
   get cacheFilePath() {
     return path.resolve(
@@ -86,7 +87,7 @@ class Package {
     if (this.storeDir) {
       await this.prepare();
       // /Users/zhangli/.zhangli-cli-dev/dependencies/node_modules/_@imooc-cli_init@1.1.2@@imooc-cli/init
-      console.log(this.cacheFilePath,'exist');
+      // console.log(this.cacheFilePath, 'exist');
       return pathExist(this.cacheFilePath);
     } else {
       return pathExist(this.targetPath);
@@ -100,11 +101,11 @@ class Package {
    */
   async install() {
     await this.prepare();
-    return npminstall({
+    return npmInstall({
       root: this.targetPath,
       pkgs: [{ name: this.packageName, version: this.packageVersion }],
-      registry: getDefaultRegistry(),
-      storeDir: this.storeDir,
+      registry: getDefaultRegistry(), // 安装源
+      storeDir: this.storeDir, // root + node_modules
     });
   }
 
@@ -135,8 +136,8 @@ class Package {
   /**
    * 1. 获取package.json所在的主目录 - 用户传入的 targetPath 有可能是没有 package.json的 不是模块的主目录
    *    比如 我们从lib目录进入，也应该兼容掉 应该找到package.json所在的目录 - 也就是模块的根路径 - pkg-dir
-   * 2. 读取 package.json 直接require 就行
-   * 3. 找到 package.json main或者lib 找到 输出成一个路径，对路径做兼容
+   * 2. 读取 package.json -  直接通过require读取 就行
+   * 3. 找到 package.json中的 main或者lib，找到，输出成一个路径，对路径做兼容
    * 4. 路径兼容 mac和window路径差异
    * 是否存在可以返回出去由外部判断
    */
@@ -152,6 +153,7 @@ class Package {
       }
       return null;
     }
+    // 考虑缓存
     if (this.storeDir) {
       return _getRootFile(this.cacheFilePath);
     } else {

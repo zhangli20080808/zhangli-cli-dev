@@ -21,7 +21,7 @@ const CACHE_DIR = 'dependencies';
  * 2. 如果存在，直接获取本地代码进行开发，尝试更新
  */
 async function exec() {
-  let targetPath = process.env.CLI_TARGET_PATH; 
+  let targetPath = process.env.CLI_TARGET_PATH;
   const homePath = process.env.CLI_HOME_PATH;
   let storeDir;
   let pkg;
@@ -31,6 +31,7 @@ async function exec() {
   // action -> exec的执行过程中传入的参数是可变参数，需要动态获取 arguments
   // exec默认会传入一些参数，比如 publish命令，所以不写在函数参数中
   // programName 写在前面后面都无所谓
+  // /Users/zhangli/learning_code/zhangli-cli-de v/core/exec/lib
   // console.log(__dirname)
   const cmdObj = arguments[arguments.length - 1];
   // command name 也可以通过接口去获取 这里我们做映射表
@@ -39,22 +40,27 @@ async function exec() {
   const packageName = SETTINGS[cmdName];
   // const packageVersion = '1.1.0';
   const packageVersion = 'latest';
-  // targetPath没有传入，自动生成缓存目录
+  // targetPath没有传入，自动生成缓存目录 
   if (!targetPath) {
     //  zhangli-cli-dev init psor -d -f
-    targetPath = path.resolve(homePath, CACHE_DIR); // 生成缓存路径 .zhangli-cli-dev/dependencies
+    // 生成缓存路径 
+    targetPath = path.resolve(homePath, CACHE_DIR);
+    // storeDir
     storeDir = path.resolve(targetPath, 'node_modules');
-    log.verbose('targetPath', targetPath); //  /Users/zhangli/.zhangli-cli-dev/dependencies
-    log.verbose('storeDir', storeDir); // /Users/zhangli/.zhangli-cli-dev/dependencies/node_module
+
+    log.verbose('targetPath', targetPath);
+    //  /Users/zhangli/.zhangli-cli-dev/dependencies
+    log.verbose('storeDir', storeDir);
+    // /Users/zhangli/.zhangli-cli-dev/dependencies/node_module
 
     pkg = new Package({
       targetPath,
       packageName,
-      storeDir,
+      storeDir, 
       packageVersion,
     });
     if (await pkg.exists()) {
-      //  尝试更新
+      //尝试更新 
       log.verbose('更新');
       await pkg.update();
     } else {
