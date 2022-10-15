@@ -1,11 +1,26 @@
-# `@zhangli-cli-dev/index`
+# 脚手架动态命令加载
 
-> TODO: description
+![脚手架命令动态加载功能架构设计](/images/脚手架命令动态加载功能架构设计%20.png)
 
-## Usage
+## 是否执行本地代码
 
+1.  在本地开发的时候，我们希望能指向本地的 commands init 代码文件，而不是缓存文件，需要标识当前 init 入口文件的绝对路径，给到绝对路径后，通过 require 来加载 require('xxxx/aaa/index.js')
+
+2.  如果本地没有，需要通过动态的将代码下载下来，且加载进去。
+
+- 获取缓存目录(放在用户的主目录下面，eg:/Users/zhangli/.zhangli-cli-dev)
+- 在上面的目录下，初始化 package 对象这个package对应一个 npm module
+- 比如我们执行的是 zhangli-cli-dev init 这个 package，就对应 init 的包名，有了 package 对象我们就可以进行判断，比如 package 就可以提供一个是否存在模块的功能，如果缓存目录里面已经存在了 package 模块 ，尝试更新，没有，下载安装最新版本)
+
+
+3.  安装完成之后，继续通过 require 的方式进行加载，获取本地代码入口文件,找到本地代码模块对应的一个地址，寻找有没有入口文件 main，没有 直接报错。如果有,动态生成执行代码的命令。
+
+```js
+// 通过node 执行字符串
+// 比如 普通执行 node core/cli/bin/index.js 还有一种方式,通过字符串的方式进行执行
+<code>node -e require('core/cli/bin/index.js')</code
 ```
-const index = require('@zhangli-cli-dev/index');
 
-// TODO: DEMONSTRATE API
-```
+4. 我们动态下载的模块其实只有一个路径，如果把这个路径中的代码执行起来 就是依靠 node -e 就可以动态生成执行代码的字符串或者一条命令，接着启动一个新的进程去执行这条命令，提升性能 - 主要依靠 node 多进程
+
+好处 - 可以完全不依赖当前脚手架去执行新的命令，只是通过命令的一个地址就可以将其执行起来，和之前实现的脚手架还是有区别的
