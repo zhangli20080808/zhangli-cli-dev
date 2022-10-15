@@ -46,11 +46,12 @@ class Package {
   }
 
   /**
+  prepare - 将 传入的latest转化成具体的 version, 安装之后的包-_zhangli-cli-dev@1.0.2@zhangli-cli-dev
    * 字符串存在，路径也要存在
    * 将 packageVersion，latest转换成具体的版本，因为具体查的时候，还是要看版本号的
    */
   async prepare() {
-
+    // 缓存模式
     if (this.storeDir && !pathExist(this.storeDir)) {
       // 一次性创建完所有目录
       fse.mkdirpSync(this.storeDir);
@@ -79,7 +80,7 @@ class Package {
   /**
    * 判断当前package是否存在
    * 1. 判断是缓存模式还是指定了 targetPath
-   * _@imooc-cli_init@1.1.2@@imooc-cli  实际的包名 @imooc-cli/init 1.1.2
+   * _zhangli-cli-dev@1.0.2@zhangli-cli-dev  实际的包名 @zhangli-cli-dev/init 1.0.2
    * 2. 生成缓存的文件路径
    * 3. 拼出这样的一个路径去判断 这个路径是否存在
    */

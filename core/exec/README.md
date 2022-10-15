@@ -45,8 +45,6 @@ d. 实现 Package.update/Package.install，更新、安装方法等 - 整体类�
 - 比如我们执行的是 zhangli-cli-dev init 这个 package，就对应 init 的包名，有了 package 对象我们就可以进行判断，比如 package 就可以提供一个是否存在模块的功能，如果缓存目录里面已经存在了 package 模块 ，尝试更新，没有，下载安装最新版本)
 
 ```js
-// 将所有的缓存目录放入 dependencies 下
-const CACHE_DIR = 'dependencies';
 if (!targetPath) {
   targetPath = path.resolve(homePath, CACHE_DIR);
   storeDir = path.resolve(targetPath, 'node_modules');

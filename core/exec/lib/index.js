@@ -16,7 +16,8 @@ const SETTINGS = {
 const CACHE_DIR = 'dependencies';
 
 /**
- * zhangli-cli-dev init test-project -tp /xxx --debug
+zhangli-cli-dev init program -d -f
+zhangli-cli-dev init program -tp /Users/zhangli/learning_code/zhangli-cli-dev/commands/init -d -f
  * 1. targetPath 不存在，创建缓存目录，拿到package，缓存到本地
  * 2. 如果存在，直接获取本地代码进行开发，尝试更新
  */
@@ -38,12 +39,12 @@ async function exec() {
   const cmdName = cmdObj.name();
   // cmdName -> init
   const packageName = SETTINGS[cmdName];
-  // const packageVersion = '1.1.0';
+  // const packageVersion = '1.0.1';
   const packageVersion = 'latest';
-  // targetPath没有传入，自动生成缓存目录 
+  // targetPath没有传入，自动生成缓存目录
   if (!targetPath) {
     //  zhangli-cli-dev init psor -d -f
-    // 生成缓存路径 
+    // 生成缓存路径
     targetPath = path.resolve(homePath, CACHE_DIR);
     // storeDir
     storeDir = path.resolve(targetPath, 'node_modules');
@@ -56,15 +57,15 @@ async function exec() {
     pkg = new Package({
       targetPath,
       packageName,
-      storeDir, 
+      storeDir,
       packageVersion,
     });
     if (await pkg.exists()) {
-      //尝试更新 
+      // 存在尝试更新Package
       log.verbose('更新');
       await pkg.update();
     } else {
-      // 安装
+      // 路径不存在，尝试安装Package
       log.verbose('安装');
       await pkg.install();
     }
@@ -75,9 +76,12 @@ async function exec() {
       packageVersion,
     });
   }
-  //  pkg.getRootFile() => /Users/zhangli/learning_code/zhangli-cli-dev/commands/init/lib/index.js
+  // pkg.getRootFile() => /Users/zhangli/learning_code/zhangli-cli-dev/commands/init/lib/index.js
   // console.log(await pkg.exists(), '111', pkg);
+  // 安装更新结束都需要获取 rootFile 去执行文件
   const rootFile = pkg.getRootFile();
+  // 最简单的执行方法
+  // require(rootFile).apply(null, arguments);
   // console.log(rootFile,'rootFile')
   // TODO 后续改为node子进程的形式 在当前进程中无法充分利用cpu资源
   // 在子进程中进行调用，额外获得更多资源，获得更高的执行性能
