@@ -51,9 +51,9 @@ class Package {
    * 将 packageVersion，latest转换成具体的版本，因为具体查的时候，还是要看版本号的
    */
   async prepare() {
-    // 缓存模式
+    // 缓存模式 storeDir本身存在，实例路径不存在，解决目录不存在的问题
     if (this.storeDir && !pathExist(this.storeDir)) {
-      // 一次性创建完所有目录
+      // 一次性创建完所有目录 
       fse.mkdirpSync(this.storeDir);
     }
     if (this.packageVersion === 'latest') {
@@ -61,6 +61,11 @@ class Package {
     }
     // console.log(this.packageVersion)
   } 
+
+  // 拼出一个文件夹路径看文件是否存在,缓存中安装的实际路径如下，需要获取这个目录做判断
+  // /Users/zhangli/.zhangli-cli-dev/dependencies/node_modules/_@zhangli-cli-dev_init@1.0.9@@zhangli-cli-dev
+  // 目标 _@zhangli-cli-dev_init@1.0.9@@zhangli-cli-dev
+  // 实际 @zhangli-cli-dev/init 1.0.9
 
   get cacheFilePath() {
     return path.resolve(

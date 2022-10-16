@@ -8,11 +8,13 @@
 const Command = require('@zhangli-cli-dev/command');
 const log = require('@zhangli-cli-dev/log');
 const fs = require('fs');
+const path = require('path');
 const fse = require('fs-extra');
+const useHome = require('user-home');
 const semver = require('semver');
 const inquirer = require('inquirer');
+const Package = require('@zhangli-cli-dev/package');
 const getProjectTemplate = require('./requestTemplate');
-
 const TYPE_PROJECT = 'project';
 const TYPE_COMPONENT = 'component';
 
@@ -20,7 +22,7 @@ class InitCommand extends Command {
   init() {
     this.programName = this._argv[0] || '';
     this.force = this._cmdObj.force;
-    log.verbose(this.programName, this.force);
+    log.verbose('Command 基类开始执行init逻辑', this.programName, this.force);
   }
   /**
     1. 准备阶段
@@ -29,12 +31,13 @@ class InitCommand extends Command {
    */
   async exec() {
     try {
+      log.verbose('Command 基类开始执行 exec逻辑');
       const projectInfo = await this.prepare();
       if (projectInfo) {
         // 拿到基本信息后，进行后续模板的下载安装
-        log.verbose(projectInfo, 'projectInfo');
+        // log.verbose(projectInfo, 'projectInfo');
         this.projectInfo = projectInfo;
-        this.downTemplate();
+        await this.downTemplate();
       }
     } catch (e) {
       log.verbose(e.message);
@@ -48,8 +51,37 @@ class InitCommand extends Command {
    * 1.3 将项目模板信息存储到mongodb数据库中
    * 1.4 通过egg.js获取mongodb中的数据并且返回
    */
-  downTemplate() {
+  async downTemplate() {
     console.log(this.projectInfo, this.template);
+    const { projectTemplate } = this.projectInfo;
+    const templateInfo = this.template.find(
+      (item) => item.npmName === projectTemplate
+    );
+    const targetPath = path.resolve(useHome, '.zhangli-cli-dev', 'template');
+    const storeDir = path.resolve(
+      useHome,
+      '.zhangli-cli-dev',
+      'template',
+      'node_modules'
+    );
+    // log.verbose(targetPath);
+    // log.verbose(storeDir);
+    const { version, npmName } = templateInfo;
+    const templateNpm = new Package({
+      targetPath,
+      storeDir,
+      packageName: npmName,
+      packageVersion: version,
+    });
+    console.log(targetPath, storeDir, npmName, version, templateNpm);
+    if (!(await templateNpm.exists())) {
+      await templateNpm.install();
+    } else {
+      await templateNpm.update();
+    }
+    // /Users/zhangli/.zhangli-cli-dev/template/node_modules
+    // drwxr-xr-x  4 zhangli  staff   128B 10 16 18:12 _zl-cli-template-vue3@1.0.0@zl-cli-template-vue3
+    // lrwxr-xr-x  1 zhangli  staff    48B 10 16 18:12 zl-cli-template-vue3 -> _zl-cli-template-vue3@1.0.0@zl-cli-template-vue3
   }
 
   /**
@@ -62,15 +94,15 @@ class InitCommand extends Command {
    * process.cwd() 当前工作目录下,是可以改变的 或者使用 require('.')
    */
   async prepare() {
-    // 0 项目模板是否存在
+    // 项目模板是否存在
     const template = await getProjectTemplate();
-    console.log(template, 'template');
     if (!template || template.length === 0) {
       throw new Error('项目模板不存在');
     }
     this.template = template;
     const localPath = process.cwd();
     const ret = this.isDirEmpty(localPath);
+    log.verbose('当前文件夹项目为空', ret);
     if (!ret) {
       let ifContinue = false;
       // 询问是否继续创建
@@ -201,7 +233,7 @@ class InitCommand extends Command {
    */
   isDirEmpty(localPath) {
     let fileList = fs.readdirSync(localPath);
-    console.log(fileList);
+    // console.log(fileList);
     // 可以做一个文件的过滤，比如.git node_modules 并不会影响
     fileList = fileList.filter(
       (file) => !file.startsWith('.') && ['node_modules'].indexOf(file) < 0

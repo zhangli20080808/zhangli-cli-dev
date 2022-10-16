@@ -30,9 +30,11 @@
     "@zhangli-cli-dev/command": "^1.1.0",
     "@zhangli-cli-dev/log": "^1.1.0",
     "@zhangli-cli-dev/request": "^1.0.10",
+    "@zhangli-cli-dev/package": "file:../../models/package",
     "fs-extra": "^9.1.0",
     "inquirer": "^8.2.0",
-    "semver": "^7.3.5"
+    "semver": "^7.3.5",
+    "user-home": "^3.0.0"
   },
   "gitHead": "e2ead08199c2e7de0a698e6c232cf515c8de7965"
 }

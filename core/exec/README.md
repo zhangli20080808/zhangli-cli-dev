@@ -90,3 +90,5 @@ if (!targetPath) {
 - CLI_HOME - .zhangli-cli 缓存主目录
 - CLI_HOME_PATH - 缓存目录 /Users/zhangli/.zhangli-cli-dev
 - LOG_LEVEL
+
+## 后台数据服务的提供
