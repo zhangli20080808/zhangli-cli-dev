@@ -15,7 +15,5 @@ const glob = require('glob');
 glob('cli-test/**/*.js', {
     ignore:['cli-test/zl-cli-test/node_modules/**','cli-test/zl-cli-test/webpack.config.js']
 }, function (err, files) {
-  console.log('====================================');
   console.log(files);
-  console.log('====================================');
 });
