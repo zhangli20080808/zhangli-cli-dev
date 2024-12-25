@@ -31,6 +31,7 @@
     "@zhangli-cli-dev/log": "^1.1.0",
     "@zhangli-cli-dev/request": "^1.0.10",
     "@zhangli-cli-dev/package": "file:../../models/package",
+    "@zhangli-cli-dev/utils": "file:../../utils/utils",
     "fs-extra": "^9.1.0",
     "inquirer": "^8.2.0",
     "semver": "^7.3.5",

@@ -14,6 +14,7 @@ const useHome = require('user-home');
 const semver = require('semver');
 const inquirer = require('inquirer');
 const Package = require('@zhangli-cli-dev/package');
+const { spinnerStart, sleep } = require('@zhangli-cli-dev/utils');
 const getProjectTemplate = require('./requestTemplate');
 const TYPE_PROJECT = 'project';
 const TYPE_COMPONENT = 'component';
@@ -71,13 +72,21 @@ class InitCommand extends Command {
       targetPath,
       storeDir,
       packageName: npmName,
-      packageVersion: version,
+      packageVersion: npmName
     });
     console.log(targetPath, storeDir, npmName, version, templateNpm);
     if (!(await templateNpm.exists())) {
+      const spinner= spinnerStart('正在下载模版...');
+      await sleep();
       await templateNpm.install();
+      spinner.stop(true)
+      log.success('下载模版成功')
     } else {
+      const spinner= spinnerStart('正在更新模版...');
+      await sleep();
       await templateNpm.update();
+      spinner.stop(true)
+      log.success('更新模版成功')
     }
     // /Users/zhangli/.zhangli-cli-dev/template/node_modules
     // drwxr-xr-x  4 zhangli  staff   128B 10 16 18:12 _zl-cli-template-vue3@1.0.0@zl-cli-template-vue3
